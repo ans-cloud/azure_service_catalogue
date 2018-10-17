@@ -108,12 +108,6 @@
           "type": "subnets",
           "location": "[parameters('location')]",
           "name": "[parameters('subnet1Name')]",
-          "tags": {
-            "owner": "[parameters('ownerTag')]",
-            "application": "[parameters('applicationTag')]",
-            "environment": "[parameters('environmentTag')]",
-            "criticality": "[parameters('criticalityTag')]"
-          },
           "dependsOn": [
             "[parameters('vnetName')]"
           ],
@@ -126,12 +120,6 @@
           "type": "subnets",
           "location": "[parameters('location')]",
           "name": "[parameters('subnet2Name')]",
-          "tags": {
-            "owner": "[parameters('ownerTag')]",
-            "application": "[parameters('applicationTag')]",
-            "environment": "[parameters('environmentTag')]",
-            "criticality": "[parameters('criticalityTag')]"
-          },
           "dependsOn": [
             "[parameters('vnetName')]"
           ],
