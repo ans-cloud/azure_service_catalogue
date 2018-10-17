@@ -8,5 +8,5 @@
 </a>
 
 
-This template will deploy an Azure Virtual Network with and 2 Subnets. VNet and Subnet names, as well as address spaces are configurable
+This template will deploy an Azure Virtual Network with 2 Subnets. VNet and Subnet names, as well as address spaces are configurable
 
