@@ -200,13 +200,14 @@
     },
     "modulesUrl": {
         "type": "string",
+        "defaultValue": "https://github.com/ans-cloud/azure_service_catalogue/blob/master/multi-region-n-tier-app/PlaceHolderWebsite.zip",
         "metadata": {
           "description": "URL for the DSC configuration module. NOTE: Can be a Github url(raw) to the zip file"
         }
       },
       "configurationFunction": {
         "type": "string",
-        "defaultValue": "ContosoWebsite.ps1\\ContosoWebsite",
+        "defaultValue": "PlaceHolderWebsite.ps1\\PlaceHolderWebsite",
         "metadata": {
           "description": "DSC configuration function to call"
         }
