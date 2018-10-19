@@ -49,6 +49,13 @@
         },
         "autoscaleMax": {
             "type": "string"
+        },
+        "powershelldscUpdateTagVersion": {
+            "type": "string",
+            "defaultValue": "1.0",
+            "metadata": {
+              "description": "Version number of the DSC deployment. Changing this value on subsequent deployments will trigger the extension to run."
+            }
         }
     },
     "variables": {
@@ -68,7 +75,9 @@
             "sku": "[parameters('windowsOSVersion')]",
             "version": "latest"
         },
-        "imageReference": "[variables('osType')]"
+        "imageReference": "[variables('osType')]",
+        "powershelldscZipFullPath": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-windows-webapp-dsc-autoscale/DSC/IISInstall.ps1.zip",
+        "webDeployPackageFullPath": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-windows-webapp-dsc-autoscale/WebDeploy/DefaultASPWebApp.v1.0.zip"
     },
     "resources": [
         {
@@ -289,7 +298,32 @@
                                 }
                             }
                         ]
-                    }
+                    },
+                    "extensionProfile": {
+                        "extensions": [
+                          {
+                            "name": "Microsoft.Powershell.DSC",
+                            "properties": {
+                              "publisher": "Microsoft.Powershell",
+                              "type": "DSC",
+                              "typeHandlerVersion": "2.9",
+                              "autoUpgradeMinorVersion": true,
+                              "forceUpdateTag": "[parameters('powershelldscUpdateTagVersion')]",
+                              "settings": {
+                                "configuration": {
+                                  "url": "[variables('powershelldscZipFullPath')]",
+                                  "script": "IISInstall.ps1",
+                                  "function": "InstallIIS"
+                                },
+                                "configurationArguments": {
+                                  "nodeName": "localhost",
+                                  "WebDeployPackagePath": "[variables('webDeployPackageFullPath')]"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
                 }
             }
         },
