@@ -16,6 +16,21 @@
         "description": "The name of the DNS record to be created.  The name is relative to the zone, not the FQDN."
       }
     },
+    "ttl": {
+      "type": "int",
+      "defaultValue": 3600,
+      "metadata": {
+        "description": "Time to Live in seconds."
+      }
+    },
+    "recordIPAddress": {
+      "type": "string",
+      "defaultValue": "1.2.3.4",
+      "metadata": {
+        "description": "The IP Address the record will resolve to"
+      }
+
+    },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -41,13 +56,10 @@
         "[parameters('newZoneName')]"
       ],
       "properties": {
-        "TTL": 3600,
+        "TTL": "[parameters('ttl')]",
         "ARecords": [
           {
-            "ipv4Address": "1.2.3.4"
-          },
-          {
-            "ipv4Address": "1.2.3.5"
+            "ipv4Address": "[parameters('recordIPAddress')]"
           }
         ]
       }
