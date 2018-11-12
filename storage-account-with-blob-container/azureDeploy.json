@@ -69,8 +69,8 @@
           }
     },
     "variables": {
-        "storageAccountNameLower": "[toLower(concat(parameters('storageAccountName'), uniqueString(resourceGroup().id)))]"
-      },
+        "storageAccountNameLower": "[toLower(parameters('storageAccountName'))]"
+    },
     "resources": [
         {
             "name": "[variables('storageAccountNameLower')]",
