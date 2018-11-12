@@ -7,7 +7,7 @@
             "minLength": 8,
             "maxLength": 24,
             "metadata": {
-                "description": "The name of the Azure Storage account. Between 8 - 24 characters. Must be Unique"
+                "description": "The name of the Azure Storage account. Between 8 - 24 characters. Must be Unique and lowercase"
             }
         },
         "storageAccountType": {
@@ -69,11 +69,11 @@
           }
     },
     "variables": {
-        "storageAccountName": "[toLower(concat(parameters('storageAccountName'), uniqueString(resourceGroup().id)))]"
+        "storageAccountNameLower": "[toLower(concat(parameters('storageAccountName'), uniqueString(resourceGroup().id)))]"
       },
     "resources": [
         {
-            "name": "[variables('storageAccountName')]",
+            "name": "[variables('storageAccountNameLower')]",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2018-02-01",
             "location": "[parameters('location')]",
