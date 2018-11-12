@@ -1,0 +1,203 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "loadBalancerName": {
+      "type": "string"
+    },
+    "sku": {
+        "type": "string",
+        "defaultValue": "Basic",
+        "allowedValues": [
+          "Basic",
+          "Standard"
+        ],
+        "metadata": {
+          "description": "Choose a Standard load balancer for up to 1000 instances, greater backend pool flexibility, HA ports, and zonal and zone-redundant scenarios."
+        }
+    },
+    "vnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/16",
+      "metadata": {
+        "description": "address prefix"
+      }
+    },
+    "subnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/24",
+      "metadata": {
+        "description": "Subnet prefix"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "ownerTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Name of the owner of the VM"
+        }
+      },
+      "applicationTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Application the VM belongs to"
+        }
+      },
+      "environmentTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Environment the VM belongs to. E.g. Dev, Test, Prod"
+        }
+      },
+      "criticalityTag":{
+        "type": "string",
+        "allowedValues": [
+            "Tier 1",
+            "Tier 2",
+            "Tier 3",
+            "Tier 4"
+        ],
+        "metadata": {
+            "description": "Business criticality of the application. Tier 1 is the highest criticality"
+        }
+      }
+  },
+  "variables": {
+    "virtualNetworkName": "[concat(parameters('loadBalancerName'), '-vnet')]",
+    "subnetName": "[concat(parameters('loadBalancerName'), '-subnet')]",
+    "nicName": "[concat(parameters('loadBalancerName'), '-nic')]",
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('virtualNetworkName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('subnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/loadBalancers/', parameters('loadBalancerName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')),'/backendAddressPools/loadBalancerBackEnd')]"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "name": "[parameters('loadBalancerName')]",
+      "type": "Microsoft.Network/loadBalancers",
+      "location": "[parameters('location')]",
+      "sku": "[parameters('sku')]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+      ],
+      "properties": {
+        "frontendIPConfigurations": [
+          {
+            "name": "loadBalancerFrontEnd",
+            "properties": {
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ],
+        "backendAddressPools": [
+          {
+            "name": "loadBalancerBackEnd"
+          }
+        ],
+        "loadBalancingRules": [
+          {
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
+              },
+              "backendAddressPool": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
+              },
+              "probe": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName')), '/probes/lbprobe')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 80,
+              "backendPort": 80,
+              "idleTimeoutInMinutes": 15
+            },
+            "name": "lbrule"
+          }
+        ],
+        "probes": [
+          {
+            "properties": {
+              "protocol": "Tcp",
+              "port": 80,
+              "intervalInSeconds": 15,
+              "numberOfProbes": 2
+            },
+            "name": "lbprobe"
+          }
+        ]
+      }
+    }
+  ]
+}
