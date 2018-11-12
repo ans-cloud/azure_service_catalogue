@@ -54,6 +54,7 @@
     }
   },
   "variables": {
+    "numVMs": 3,
     "imagePublisher": "Canonical",
     "imageOffer": "UbuntuServer",
     "nicName": "[concat(parameters('vmName'), '-nic')]",
@@ -72,7 +73,7 @@
       "name": "[concat(variables('publicIPAddressName'), copyIndex())]",
       "copy": {
         "name": "ipLoop",
-        "count": "[parameters('numVMs')]"
+        "count": "[variables('numVMs')]"
       },
       "location": "[resourceGroup().location]",
       "properties": {
@@ -109,7 +110,7 @@
       "name": "[concat(variables('nicName'), copyIndex())]",
       "copy": {
         "name": "nicLoop",
-        "count": "[parameters('numVMs')]"
+        "count": "[variables('numVMs')]"
       },
       "location": "[resourceGroup().location]",
       "dependsOn": [
@@ -140,7 +141,7 @@
       "location": "[resourceGroup().location]",
       "copy": {
         "name": "vmLoop",
-        "count": "[parameters('numVMs')]"
+        "count": "[variables('numVMs')]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex())]"
@@ -179,7 +180,7 @@
       "name": "[concat(parameters('vmName'), copyIndex(), '/installcustomscript')]",
       "copy": {
         "name": "extLoop",
-        "count": "[parameters('numVMs')]"
+        "count": "[variables('numVMs')]"
       },
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
