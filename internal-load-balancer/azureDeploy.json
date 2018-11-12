@@ -140,7 +140,9 @@
       "name": "[parameters('loadBalancerName')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[parameters('location')]",
-      "sku": "[parameters('sku')]",
+      "sku": {
+        "name": "[parameters('sku')]"
+      },
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
