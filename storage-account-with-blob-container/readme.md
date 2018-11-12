@@ -8,5 +8,5 @@
 </a>
 
 
-This template will create an Azure Storage Account and Blob Container on Azure
+This template will create an Azure General Purpose v2 Storage Account, with specified replication settings and a Blob Container configured for private access.
 

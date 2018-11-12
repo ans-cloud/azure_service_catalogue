@@ -8,6 +8,19 @@
                 "description": "The name of the Azure Storage account."
             }
         },
+        "storageAccountType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+              "Standard_LRS",
+              "Standard_GRS",
+              "Standard_ZRS",
+              "Premium_LRS"
+            ],
+            "metadata": {
+              "description": "Storage Account type"
+            }
+        },
         "containerName": {
             "type": "string",
             "defaultValue": "logs",
@@ -21,7 +34,37 @@
             "metadata": {
                 "description": "The location in which the Azure Storage resources should be deployed."
             }
-        }
+        },
+        "ownerTag":{
+            "type": "string",
+            "metadata": {
+                "description": "Name of the owner of the VM"
+            }
+          },
+          "applicationTag":{
+            "type": "string",
+            "metadata": {
+                "description": "Application the VM belongs to"
+            }
+          },
+          "environmentTag":{
+            "type": "string",
+            "metadata": {
+                "description": "Environment the VM belongs to. E.g. Dev, Test, Prod"
+            }
+          },
+          "criticalityTag":{
+            "type": "string",
+            "allowedValues": [
+                "Tier 1",
+                "Tier 2",
+                "Tier 3",
+                "Tier 4"
+            ],
+            "metadata": {
+                "description": "Business criticality of the application. Tier 1 is the highest criticality"
+            }
+          }
     },
     "resources": [
         {
@@ -29,10 +72,15 @@
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2018-02-01",
             "location": "[parameters('location')]",
+            "tags": {
+                "owner": "[parameters('ownerTag')]",
+                "application": "[parameters('applicationTag')]",
+                "environment": "[parameters('environmentTag')]",
+                "criticality": "[parameters('criticalityTag')]"
+            },
             "kind": "StorageV2",
             "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
+                "name": "[parameters('storageAccountType')]"
             },
             "properties": {
                 "accessTier": "Hot"
