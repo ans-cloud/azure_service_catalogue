@@ -4,6 +4,8 @@
   "parameters": {
     "storageAccountName": {
       "type": "string",
+      "maxLength": 24,
+      "minLength": 8,
       "metadata": {
         "description": "Name of storage account"
       }
@@ -61,6 +63,15 @@
         "description": "Load Balancer name"
       }
     },
+    "lbSku": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+          "Basic",
+          "Standard"
+      ]
+
+    },
     "nicNamePrefix": {
       "type": "string",
       "defaultValue": "nic",
@@ -92,9 +103,9 @@
   },
   "variables": {
     "storageAccountType": "Standard_LRS",
-    "availabilitySetName": "myAvSet",
+    "availabilitySetName": "[concat(parameters('lbName'), 'AVSet')]",
     "addressPrefix": "10.0.0.0/16",
-    "subnetName": "Subnet-1",
+    "subnetName": "[concat(parameters('vnetName'), '-subnet1')]",
     "subnetPrefix": "10.0.0.0/24",
     "publicIPAddressType": "Dynamic",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables ('subnetName'))]",
@@ -201,6 +212,9 @@
       "name": "[parameters('lbName')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "[parameters('lbSku')]"
+      },
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIPAddressName'))]"
       ],
