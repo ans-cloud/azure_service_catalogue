@@ -1,0 +1,145 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "databaseName": {
+        "type": "string"
+    },
+    "administratorLogin": {
+      "type": "string"
+    },
+    "administratorLoginPassword": {
+      "type": "securestring"
+    },
+    "databaseForMySqlTier": {
+        "type": "string",
+        "defaultValue": "Basic",
+        "allowedValues": [
+            "Basic",
+            "GeneralPurpose",
+            "MemoryOptimized"
+        ]
+    },
+    "databaseForMySqlFamily": {
+        "type": "string",
+        "defaultValue": "Gen4",
+        "allowedValues": [
+            "Gen4",
+            "Gen5"
+        ]
+    },
+    "databaseForMySqlCores": {
+        "type": "int",
+        "defaultValue": 1,
+        "allowedValues": [
+            1,
+            2,
+            4,
+            8,
+            16,
+            32
+        ]
+    },
+    "databaseForMySqlVersion": {
+        "type": "string",
+        "defaultValue": "5.7",
+        "allowedValues": [
+            "5.7",
+            "5.6"
+        ]
+    },
+    "databaseForMySqlSizeGb": {
+        "type": "int",
+        "defaultValue": 5
+    },
+    "location": {
+        "type": "string",
+        "defaultValue": "[resourceGroup().location]",
+        "metadata": {
+          "description": "Location for all resources."
+        }
+    },
+    "ownerTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Name of the owner of the VM"
+      }
+    },
+    "applicationTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Application the VM belongs to"
+      }
+    },
+    "environmentTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Environment the VM belongs to. E.g. Dev, Test, Prod"
+      }
+    },
+    "criticalityTag":{
+      "type": "string",
+      "allowedValues": [
+          "Tier 1",
+          "Tier 2",
+          "Tier 3",
+          "Tier 4"
+      ],
+      "metadata": {
+          "description": "Business criticality of the application. Tier 1 is the highest criticality"
+      }
+    }
+ },
+"variables": {
+    "serverName": "[toLower(concat(parameters('databaseName'), '-srv'))]",
+    "databaseForMySqlSku": "[concat(variables('tierSymbol')[parameters('databaseForMySqlTier')], '_', parameters('databaseForMySqlFamily'), '_', parameters('databaseForMySqlCores'))]",
+    "tierSymbol": {
+            "Basic": "B",
+            "GeneralPurpose": "GP",
+            "MemoryOptimized": "MO"
+    }
+},
+"resources": [
+    {
+        "name": "[variables('servername')]",
+        "type": "Microsoft.DBforMySQL/servers",
+        "apiVersion": "2017-12-01",
+        "location": "[parameters('location')]",
+        "tags": {
+            "owner": "[parameters('ownerTag')]",
+            "application": "[parameters('applicationTag')]",
+            "environment": "[parameters('environmentTag')]",
+            "criticality": "[parameters('criticalityTag')]"
+        },
+        "sku": {
+            "name": "[variables('databaseForMySqlSku')]"
+        },
+        "properties": {
+            "version": "[parameters('databaseForMySqlVersion')]",
+            "administratorLogin": "[parameters('administratorLogin')]",
+            "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+            "createMode": "default"
+        },
+        "resources": [
+            {
+                "name": "[parameters('databaseName')]",
+                "type": "databases",
+                "apiVersion": "2017-12-01",
+                "tags": {
+                    "owner": "[parameters('ownerTag')]",
+                    "application": "[parameters('applicationTag')]",
+                    "environment": "[parameters('environmentTag')]",
+                    "criticality": "[parameters('criticalityTag')]"
+                },
+                "dependsOn": [
+                    "[resourceId('Microsoft.DBforMySQL/servers', variables('serverName'))]"
+                ],
+                "properties": {
+                    "charset": "utf8",
+                    "collation": "utf8_general_ci"
+                }
+            }
+        ]
+    }
+]
+}
