@@ -20,14 +20,6 @@
             "MemoryOptimized"
         ]
     },
-    "databaseForMySqlFamily": {
-        "type": "string",
-        "defaultValue": "Gen4",
-        "allowedValues": [
-            "Gen4",
-            "Gen5"
-        ]
-    },
     "databaseForMySqlCores": {
         "type": "int",
         "defaultValue": 1,
@@ -92,7 +84,7 @@
  },
 "variables": {
     "serverName": "[toLower(concat(parameters('databaseName'), '-srv'))]",
-    "databaseForMySqlSku": "[concat(variables('tierSymbol')[parameters('databaseForMySqlTier')], '_', parameters('databaseForMySqlFamily'), '_', parameters('databaseForMySqlCores'))]",
+    "databaseForMySqlSku": "[concat(variables('tierSymbol')[parameters('databaseForMySqlTier')], '_', 'Gen5', '_', parameters('databaseForMySqlCores'))]",
     "tierSymbol": {
             "Basic": "B",
             "GeneralPurpose": "GP",
