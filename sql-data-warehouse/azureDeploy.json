@@ -32,7 +32,7 @@
       }
     },
     "serviceLevelObjective": {
-      "defaultValue": "DW400",
+      "defaultValue": "DW500",
       "type": "string",
       "allowedValues": [
           "DW500c",
