@@ -8,6 +8,6 @@
 </a>
 
 
-This template will create and Azure SQL Database.
+This template will create and Azure SQL Database and SQL Server
 
 
