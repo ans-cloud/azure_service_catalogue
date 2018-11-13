@@ -42,9 +42,11 @@
       "defaultValue": "DW400",
       "type": "string",
       "allowedValues": [
-          "DW400",
-          "DW500",
-          "DW600"
+          "DW500c",
+          "DW1000c",
+          "DW1500c",
+          "DW2000c"
+
       ],
       "metadata": {
         "description": "Performance Level"
