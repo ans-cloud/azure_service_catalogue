@@ -1,0 +1,142 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "databaseName": {
+        "type": "string"
+    },
+    "administratorLogin": {
+      "type": "string"
+    },
+    "administratorLoginPassword": {
+      "type": "securestring"
+    },
+    "collation": {
+      "type": "string",
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "edition": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "allowedValues": [
+        "Standard",
+        "Premium"
+      ]
+    },
+    "maxSizeBytes": {
+      "type": "string",
+      "defaultValue": "1073741824"
+    },
+    "requestedServiceObjectiveName": {
+      "type": "string",
+      "defaultValue": "S0",
+      "allowedValues": [
+        "S0",
+        "S1",
+        "S2",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "metadata": {
+        "description": "Describes the performance level for Azure SQL Database Edition"
+      }
+    },
+    "location": {
+        "type": "string",
+        "defaultValue": "[resourceGroup().location]",
+        "metadata": {
+          "description": "Location for all resources."
+        }
+    },
+    "ownerTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Name of the owner of the VM"
+      }
+    },
+    "applicationTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Application the VM belongs to"
+      }
+    },
+    "environmentTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Environment the VM belongs to. E.g. Dev, Test, Prod"
+      }
+    },
+    "criticalityTag":{
+      "type": "string",
+      "allowedValues": [
+          "Tier 1",
+          "Tier 2",
+          "Tier 3",
+          "Tier 4"
+      ],
+      "metadata": {
+          "description": "Business criticality of the application. Tier 1 is the highest criticality"
+      }
+    }
+ },
+  "variables": {
+    "sqlserverName": "[toLower(concat(parameters('databaseName'), '-srv'))]"
+  },
+  "resources": [
+    {
+      "name": "[variables('sqlserverName')]",
+      "type": "Microsoft.Sql/servers",
+      "location": "[parameters('location')]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "displayName": "SqlServer"
+      },
+      "apiVersion": "2014-04-01-preview",
+      "properties": {
+        "administratorLogin": "[parameters('administratorLogin')]",
+        "administratorLoginPassword": "[parameters('administratorLoginPassword')]"
+      },
+      "resources": [
+        {
+          "name": "[parameters('databaseName')]",
+          "type": "databases",
+          "location": "[parameters('location')]",
+          "tags": {
+            "owner": "[parameters('ownerTag')]",
+            "application": "[parameters('applicationTag')]",
+            "environment": "[parameters('environmentTag')]",
+            "criticality": "[parameters('criticalityTag')]",
+            "displayName": "Database"
+          },
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', variables('sqlserverName'))]"
+          ],
+          "properties": {
+            "edition": "[parameters('edition')]",
+            "collation": "[parameters('collation')]",
+            "maxSizeBytes": "[parameters('maxSizeBytes')]",
+            "requestedServiceObjectiveName": "[parameters('requestedServiceObjectiveName')]"
+          }
+        },
+        {
+          "type": "firewallrules",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', variables('sqlserverName'))]"
+          ],
+          "location": "[parameters('location')]",
+          "name": "AllowAllWindowsAzureIps",
+          "properties": {
+            "endIpAddress": "0.0.0.0",
+            "startIpAddress": "0.0.0.0"
+          }
+        }
+      ]
+    }
+  ]
+}
