@@ -40,9 +40,26 @@
             "5.6"
         ]
     },
-    "databaseForMySqlSizeGb": {
+    "databaseForMySqlSizeMb": {
         "type": "int",
-        "defaultValue": 5
+        "defaultValue": 5120
+    },
+    "backupRetentionPeriod": {
+        "type": "int",
+        "minValue": 7,
+        "maxValue": 35,
+        "defaultValue": 7
+    },
+    "backupRedundancyOption": {
+        "type": "string",
+        "defaultValue": "LRS",
+        "allowedValues": [
+            "LRS",
+            "GRS"
+        ],
+        "metadata": {
+            "description": "LRS to recover from data loss within region. GRS to recover from regional outage or data loss"
+        }
     },
     "location": {
         "type": "string",
@@ -110,6 +127,11 @@
             "version": "[parameters('databaseForMySqlVersion')]",
             "administratorLogin": "[parameters('administratorLogin')]",
             "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+            "storageProfile": {
+                "backupRetentionDays": "[parameters('backupRetentionPeriod')]",
+                "geoRedundantBackup": "[parameters('backupRedundancyOption')]",
+                "storageMB": "[parameters('databaseForMySqlSizeMb')]"
+            },
             "createMode": "default"
         },
         "resources": [
