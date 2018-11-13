@@ -43,6 +43,9 @@
       "properties": {
         "name": "[parameters('databaseAccountName')]",
         "databaseAccountOfferType": "[variables('offerType')]",
+        "consistencyPolicy":{
+          "defaultConsistencyLevel":"Session"
+        },
         "locations": [
           {
             "locationName": "[parameters('location')]",
