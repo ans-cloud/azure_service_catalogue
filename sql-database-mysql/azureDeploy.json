@@ -50,15 +50,15 @@
         "maxValue": 35,
         "defaultValue": 7
     },
-    "backupRedundancyOption": {
+    "geoRedundancyEnabled": {
         "type": "string",
-        "defaultValue": "LRS",
+        "defaultValue": "Disabled",
         "allowedValues": [
-            "LRS",
-            "GRS"
+            "Disabled",
+            "Enable"
         ],
         "metadata": {
-            "description": "LRS to recover from data loss within region. GRS to recover from regional outage or data loss"
+            "description": "Disable to recover from data loss within region. Enable to recover from regional outage or data loss"
         }
     },
     "location": {
@@ -129,7 +129,7 @@
             "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
             "storageProfile": {
                 "backupRetentionDays": "[parameters('backupRetentionPeriod')]",
-                "geoRedundantBackup": "[parameters('backupRedundancyOption')]",
+                "geoRedundantBackup": "[parameters('geoRedundancyEnabled')]",
                 "storageMB": "[parameters('databaseForMySqlSizeMb')]"
             },
             "createMode": "default"
