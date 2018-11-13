@@ -32,14 +32,16 @@
       }
     },
     "serviceLevelObjective": {
-      "defaultValue": "DW500c",
+      "defaultValue": "DW400",
       "type": "string",
       "allowedValues": [
-          "DW500c",
-          "DW1000c",
-          "DW1500c",
-          "DW2000c"
-
+          "DW100",
+          "DW200",
+          "DW300",
+          "DW400",
+          "DW500",
+          "DW600",
+          "DW1000"
       ],
       "metadata": {
         "description": "Performance Level"
