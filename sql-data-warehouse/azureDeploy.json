@@ -2,13 +2,12 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "sqlServerName": {
-      "defaultValue": "[concat('sql', uniqueString(resourceGroup().id))]",
-      "type": "string",
-      "metadata": {
-        "description": "The SQL Logical Server name."
-      }
-    },
+    "dataWarehouseName": {
+        "type": "string",
+        "metadata": {
+          "description": "The name of the Data Warehouse."
+        }
+    },  
     "sqlAdministratorLogin": {
       "type": "string",
       "metadata": {
@@ -19,12 +18,6 @@
       "type": "securestring",
       "metadata": {
         "description": "The administrator password of the SQL Server."
-      }
-    },
-    "dataWarehouseName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the Data Warehouse."
       }
     },
     "transparentDataEncryption": {
@@ -60,10 +53,12 @@
       }
     }
   },
-  "variables": {},
+  "variables": {
+    "sqlServerName": "[concat(parameters('dataWarehouseName'), 'srv')]"
+  },
   "resources": [
     {
-      "name": "[parameters('sqlServerName')]",
+      "name": "[variables('sqlServerName')]",
       "type": "Microsoft.Sql/servers",
       "apiVersion": "2015-05-01-preview",
       "location": "[parameters('location')]",
