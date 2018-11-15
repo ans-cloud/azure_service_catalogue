@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vnetName": {
+          "value": "GEN-NAME"
+      },
+      "vnetAddressPrefix": {
+          "value": "GEN-IP-RANGE"
+      },
+      "subnet1Name": {
+          "value": "GEN-NAME"
+      },
+      "subnet1Prefix": {
+          "value": "GEN-IP-RANGE"
+      },
+      "subnet2Name": {
+          "value": "GEN-NAME"
+      },
+      "subnet2Prefix": {
+        "value": "GEN-IP-RANGE"
+      },
+      "ownerTag": {
+        "value": "GEN-VALUE"
+      },
+      "applicationTag": {
+        "value": "GEN-VALUE"
+      },
+      "environmentTag": {
+        "value": "GEN-VALUE"
+      },
+      "criticalityTag": {
+        "value": "GEN-VALUE"
+      }
+    }
+  }
