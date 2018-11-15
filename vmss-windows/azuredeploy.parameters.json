@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "adminUsername": {
+        "value": "GEN-NAME"
+      },
+      "adminPassword": {
+        "value": "GEN-PASSWORD"
+      },
+      "vmssName": {
+          "value": "GEN-NAME"
+      },
+      "dnsLabel": {
+          "value": "GEN-UNIQUE"
+      },
+      "instanceCount": {
+          "value": "GEN-VALUE"
+      },
+      "autoscaleMin": {
+          "value": "GEN-VALUE"
+      },
+      "autoscaleMax": {
+          "value": "GEN-VALUE"
+      }
+    }
+  }
