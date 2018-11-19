@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "databaseName": {
+          "value": "XXXXXXXX"
+      },
+      "administratorLogin": {
+          "value": "XXXXXXXX"
+      },
+      "administratorLoginPassword": {
+          "value": "XXXXXXXX"
+      },
+      "ownerTag": {
+          "value": "XXXXXXXX"
+      },
+      "applicationTag": {
+          "value": "XXXXXXXX"
+      },
+      "environmentTag": {
+        "value": "XXXXXXXX"
+      },
+      "criticalityTag": {
+        "value": "XXXXXXXX"
+      }
+    }
+  }
