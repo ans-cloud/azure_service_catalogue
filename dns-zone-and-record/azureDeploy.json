@@ -4,7 +4,7 @@
   "parameters": {
     "newZoneName": {
       "type": "string",
-      "defaultValue": "contoso.com",
+      "defaultValue": "contoso.xyz",
       "metadata": {
         "description": "The name of the DNS zone to be created.  Must have at least 2 segements, e.g. hostname.com"
       }
