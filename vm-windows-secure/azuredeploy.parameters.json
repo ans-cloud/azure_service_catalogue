@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "adminUsername": {
+        "value": "GEN-NAME"
+      },
+      "adminPassword": {
+        "reference": {
+          "keyVault": {
+            "id": "<Enter KeyVault ResourceID. Use Get-AzureRMKeyVault to get the ID"
+          },
+          "secretName": "<Enter the name of the secret you want to use"
+        }
+      },
+      "dnsLabelPrefix": {
+        "value": "GEN-UNIQUE"
+      },
+      "vmName": {
+          "value": "GEN-NAME"
+      },
+      "ownerTag": {
+          "value": "GEN-VALUE"
+      },
+      "applicationTag": {
+          "value": "GEN-VALUE"
+      },
+      "environmentTag": {
+          "value": "GEN-VALUE"
+      },
+      "criticalityTag": {
+          "value": "GEN-VALUE"
+      }
+    }
+  }
