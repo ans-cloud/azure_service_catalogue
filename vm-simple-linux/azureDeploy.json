@@ -51,7 +51,7 @@
         "type": "string",
         "defaultValue": "Standard_D1_v2",
         "metadata": {
-            "description": "Select the vm size"
+            "description": "Use Get-AzureRmVmSize for a list of available sizes."
         }
     },
     "sshAddressRange":{
