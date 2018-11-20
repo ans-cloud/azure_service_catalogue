@@ -52,7 +52,7 @@
         "type": "string",
         "defaultValue": "Standard_D1_v2",
         "metadata": {
-            "description": "Select the vm size"
+            "description": "Use Get-AzureRmVMSize to get a list of available sizes in a region"
         }
     },
     "rdpAddressRange":{

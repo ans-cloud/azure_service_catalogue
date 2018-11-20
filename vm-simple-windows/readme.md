@@ -7,4 +7,8 @@
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-This template allows you to deploy a simple Windows VM using a few different options for the Windows version, using the latest patched version. This will deploy a A2 size VM in the resource group location and return the fully qualified domain name of the VM. You will also specify an IP address or IP address range for allowed RDP access as well as specifiying tag values for the VM owner, environment, application and business criticality
+This template allows you to deploy a simple Windows VM using a few different options for the Windows version, using the latest patched version. This will deploy a VM in the resource group location and return the fully qualified domain name of the VM. You will also specify an IP address or IP address range for allowed RDP access as well as specifiying tag values for the VM owner, environment, application and business criticality.
+
+The VM will have an 128GB Managed OS Disk and a 1TB Managed Data Disk attached.
+
+As part of the deployment a new vNet and subnet are also deployed along with a Network Security Group and a Public IP address.
