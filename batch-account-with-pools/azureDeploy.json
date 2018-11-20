@@ -50,6 +50,18 @@
 	      "Standard_D4_v2"
       ]
     },
+    "dedicatedNodes": {
+      "type": "int",
+      "metadata": {
+        "description": "number of dedicated nodes"
+      }
+    },
+    "lowPriorityNodes": {
+      "type": "int",
+      "metadata": {
+        "description": "number of low priority nodes"
+      }
+    },
     "storageAccountsku": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -156,8 +168,8 @@
           },
           "scaleSettings": {
               "fixedScale": {
-                  "targetDedicatedNodes": 0,
-                  "targetLowPriorityNodes": 0,
+                  "targetDedicatedNodes": "[parameters('dedicatedNodes')]",
+                  "targetLowPriorityNodes": "[parameters('lowPriorityNodes')]",
                   "resizeTimeout": "PT15M"
               }
           }
