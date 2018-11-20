@@ -10,6 +10,18 @@
       },
       "poolDisplayName": {
         "value": "XXXXXXXX"
+      },
+      "ownerTag": {
+        "value": "XXXXXXXX"
+      },
+      "applicationTag": {
+        "value": "XXXXXXXX"
+      },
+      "environmentTag": {
+        "value": "XXXXXXXX"
+      },
+      "criticalityTag": {
+        "value": "XXXXXXXX"
       }
     }
   }

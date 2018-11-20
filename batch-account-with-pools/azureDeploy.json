@@ -69,6 +69,18 @@
       "metadata": {
         "description": "Location for all resources."
       }
+    },
+    "ownerTag": {
+      "type": "string"
+    },
+    "applicationTag": {
+      "type": "string"
+    },
+    "environmentTag": {
+      "type": "string"
+    },
+    "criticalityTag": {
+      "type": "string"
     }
   },
   "variables": {
@@ -86,7 +98,11 @@
       },
       "kind": "Storage",
       "tags": {
-        "ObjectName": "[variables('storageAccountName')]"
+        "ObjectName": "[variables('storageAccountName')]",
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]"
       },
       "properties": {}
     },
@@ -96,7 +112,11 @@
       "apiVersion": "2015-12-01",
       "location": "[parameters('location')]",
       "tags": {
-        "ObjectName": "[parameters('batchAccountName')]"
+        "ObjectName": "[parameters('batchAccountName')]",
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]"
       },
       "properties": {
         "autoStorage": {
