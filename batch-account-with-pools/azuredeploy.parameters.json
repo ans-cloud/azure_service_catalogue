@@ -11,6 +11,12 @@
       "poolDisplayName": {
         "value": "XXXXXXXX"
       },
+      "dedicatedNodes": {
+        "value": "X"
+      },
+      "lowPriorityNodes": {
+        "value": "X"
+      },
       "ownerTag": {
         "value": "XXXXXXXX"
       },
