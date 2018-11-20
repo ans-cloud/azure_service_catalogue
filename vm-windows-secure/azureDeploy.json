@@ -305,13 +305,13 @@
       "properties": {
         "publisher": "Microsoft.Azure.Security",
         "type": "IaaSAntimalware",
-        "typeHandlerVersion": "1.1",
+        "typeHandlerVersion": "1.3",
         "settings": {
           "AntimalwareEnabled": "true",
           "Exclusions": {
-            "Paths": "C:\\Users",
-            "Extensions": ".txt",
-            "Processes": "taskmgr.exe"
+            "Paths": "%windir%\\SoftwareDistribution\\Datastore\\DataStore.edb;%windir%\\SoftwareDistribution\\Datastore\\Logs\\",
+            "Extensions": "",
+            "Processes": ""
           },
           "RealtimeProtectionEnabled": "true",
           "ScheduledScanSettings": {
