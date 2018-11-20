@@ -9,4 +9,4 @@
 
 This template allows you to deploy a simple Windows VM using a few different options for the Windows version, using the latest patched version. This will deploy  VM in the resource group location and return the fully qualified domain name of the VM. You will also specify an IP address or IP address range for allowed RDP access as well as specifiying tag values for the VM owner, environment, application and business criticality.
 
-The parameters file can be used to specify a keyvault and secret rather than using a clear text password.
+The parameters file can be used to specify a keyvault and secret rather than using a clear text password. This template requires a KeyVault and a secret in place before it can be used.
