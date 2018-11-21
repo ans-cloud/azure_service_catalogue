@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vaultName": {
+        "value": "XXXXXXXX"
+      },
+      "policyName": {
+          "value": "XXXXXXXX"
+      },
+      "scheduleRunTimes": {
+          "value": [ "XXXXXXXX" ]
+      },
+      "timeZone": {
+          "value": "XXXXXXXX"
+      },
+      "dailyRetentionDurationCount": {
+          "value": 1
+      },
+      "daysOfTheWeek": {
+          "value": [ "XXXXXXXX", "XXXXXXXX", "XXXXXXXX" ]
+      },
+      "weeklyRetentionDurationCount": {
+        "value": 1
+      },
+      "monthlyRetentionDurationCount": {
+        "value": 1
+      },
+      "monthsOfYear": {
+        "value": [ "XXXXXXXX", "XXXXXXXX", "XXXXXXXX" ]
+      },
+      "yearlyRetentionDurationCount": {
+        "value": 1
+      },
+      "ownerTag": {
+        "value": "XXXXXXXX"
+      },
+      "applicationTag": {
+        "value": "XXXXXXXX"
+      },
+      "environmentTag": {
+        "value": "XXXXXXXX"
+      },
+      "criticalityTag": {
+        "value": "XXXXXXXX"
+      }
+    }
+  }
