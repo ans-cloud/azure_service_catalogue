@@ -18,7 +18,7 @@
       "type": "array",
       "defaultValue": [ "02:00" ],
       "metadata": {
-        "description": "Times in day when backup should be triggered. e.g. 01:00 or 13:00. Must be an array, e.g. [02:00] This will be used in LTR too for daily, weekly, monthly and yearly backup."
+        "description": "Times in day when backup should be triggered. e.g. 01:00 or 13:00. Must be an array, e.g. [\"02:00\"] This will be used in LTR too for daily, weekly, monthly and yearly backup."
       }
     },
     "timeZone": {
@@ -37,7 +37,7 @@
     "daysOfTheWeek": {
       "type": "array",
       "metadata": {
-        "description": "Backup will run on array of Days like, Monday, Tuesday etc. Applies in Weekly retention only."
+        "description": "Backup will run on array of Days like, Monday, Tuesday etc. e.g. [\"Sunday\"]. Applies in Weekly retention only."
       }
     },
     "weeklyRetentionDurationCount": {
@@ -55,7 +55,7 @@
     "monthsOfYear": {
       "type": "array",
       "metadata": {
-        "description": "Array of Months for Yearly Retention"
+        "description": "Array of Months for Yearly Retention. E.g. [\"January\"]"
       }
     },
     "yearlyRetentionDurationCount": {
