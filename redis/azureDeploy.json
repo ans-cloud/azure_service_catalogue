@@ -56,16 +56,9 @@
     },
     "diagnosticsEnabled": {
       "type": "bool",
-      "defaultValue": false,
+      "defaultValue": true,
       "metadata": {
         "description": "A value that indicates whether diagnostics should be saved to the specified storage account."
-      }
-    },
-    "existingDiagnosticsStorageAccountId": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Existing storage account for diagnostics. Enter the Resource ID"
       }
     },
     "storageAccountPrefix": {
