@@ -61,11 +61,11 @@
         "description": "A value that indicates whether diagnostics should be saved to the specified storage account."
       }
     },
-    "existingDiagnosticsStorageAccountName": {
+    "existingDiagnosticsStorageAccountId": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
-        "description": "Existing storage account for diagnostics."
+        "description": "Existing storage account for diagnostics. Enter the Resource ID"
       }
     }
   },
@@ -93,7 +93,7 @@
             "[concat('Microsoft.Cache/Redis/', parameters('redisCacheName'))]"
           ],
           "properties": {
-            "storageAccountName": "[parameters('existingDiagnosticsStorageAccountName')]",
+            "storageAccountId": "[parameters('existingDiagnosticsStorageAccountId')]",
             "logs": [],
             "metrics": [
               {
