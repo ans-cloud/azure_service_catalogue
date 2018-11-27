@@ -67,9 +67,66 @@
       "metadata": {
         "description": "Existing storage account for diagnostics. Enter the Resource ID"
       }
-    }
+    },
+    "storageAccountPrefix": {
+      "type": "string",
+      "maxLength": 11,
+      "metadata": {
+        "description": "prefix for the storage account name"
+      }
+    },
+      "ownerTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Name of the owner of the VM"
+        }
+      },
+      "applicationTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Application the VM belongs to"
+        }
+      },
+      "environmentTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Environment the VM belongs to. E.g. Dev, Test, Prod"
+        }
+      },
+      "criticalityTag":{
+        "type": "string",
+        "allowedValues": [
+            "Tier 1",
+            "Tier 2",
+            "Tier 3",
+            "Tier 4"
+        ],
+        "metadata": {
+            "description": "Business criticality of the application. Tier 1 is the highest criticality"
+        }
+      }
+  },
+  "variables": {
+    "storageAccountName": "[concat(parameters('storageAccountPrefix'), uniqueString(resourceGroup().id))]"
   },
   "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('storageAccountName')]",
+      "apiVersion": "2018-02-01",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]"
+      },
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {}
+    },
     {
       "apiVersion": "2015-08-01",
       "name": "[parameters('redisCacheName')]",
@@ -90,10 +147,11 @@
           "name": "[concat(parameters('redisCacheName'), '/Microsoft.Insights/', parameters('redisCacheName'))]",
           "location": "[resourceGroup().location]",
           "dependsOn": [
-            "[concat('Microsoft.Cache/Redis/', parameters('redisCacheName'))]"
+            "[concat('Microsoft.Cache/Redis/', parameters('redisCacheName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
           ],
           "properties": {
-            "storageAccountId": "[parameters('existingDiagnosticsStorageAccountId')]",
+            "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
             "logs": [],
             "metrics": [
               {
