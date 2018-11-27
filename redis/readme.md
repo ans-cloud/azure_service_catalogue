@@ -8,6 +8,6 @@
 </a>
 
 
-This template will create a redis cache
+This template will create a redis cache with diagnostic settings enabled and a storage account.
 
 
