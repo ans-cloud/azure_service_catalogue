@@ -1,0 +1,80 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceName": {
+            "type": "string",
+            "metadata": {
+              "description": "Log Analytics workspace name"
+            }
+        },
+        "automationAccountName": {
+            "defaultValue": "",
+            "type": "string",
+            "metadata": {
+              "description": "Automation account name"
+            }
+        }
+    },
+    "variables": {
+        "updatesName": "[concat('Updates', '(', parameters('workspaceName'), ')')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "name": "[parameters('workspaceName')]",
+            "apiVersion": "2015-11-01-preview",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "sku": {
+                    "name": "Standalone"
+                },
+                "retentionInDays": 31
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.OperationsManagement/solutions",
+            "name": "[variables('updatesName')]",
+            "apiVersion": "2015-11-01-preview",
+            "location": "[resourceGroup().location]",
+            "plan": {
+                "name": "[variables('updatesName')]",
+                "promotionCode": "",
+                "product": "OMSGallery/Updates",
+                "publisher": "Microsoft"
+            },
+            "properties": {
+                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
+            },
+            "dependsOn": [
+                "[resourceId('microsoft.operationalinsights/workspaces', parameters('workspaceName'))]"
+            ]
+        },
+        {
+            "apiVersion": "2015-10-31",
+            "type": "Microsoft.Automation/automationAccounts",
+            "name": "[parameters('automationAccountName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+              "sku": {
+                "name": "Basic"
+              }
+            }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/linkedServices",
+            "name": "[concat(parameters('workspaceName'), '/' , 'Automation')]",
+            "apiVersion": "2015-11-01-preview",
+            "properties": {
+                "resourceId": "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')]"
+            },
+            "dependsOn": [
+                "[resourceId('microsoft.operationalinsights/workspaces', parameters('workspaces_workspace_db2cd3ca_ef11_4b80_8d07_854069624a34_ejp_name'))]",
+                "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')]",
+                "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')]"
+            ]
+        }
+    ]
+}
