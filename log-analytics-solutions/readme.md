@@ -8,6 +8,6 @@
 </a>
 
 
-This template will create a new Log Analytics workspace with pre-configured solutions for updates, anti malware and SQL Assessements
+This template will create a new Log Analytics workspace with pre-configured solutions for updates, anti malware and SQL Assessements. It will also create storage account datasources for Windows Event Logs and IIS Logs.
 
 

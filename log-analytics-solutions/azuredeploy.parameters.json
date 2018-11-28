@@ -5,7 +5,16 @@
       "workspaceName": {
         "value": "XXXXXXXX"
       },
-      "sku": {
+      "serviceTier": {
+        "value": "XXXXXXXX"
+      },
+      "dataRetention": {
+        "value": "X"
+      },
+      "applicationDiagnosticsStorageAccountName": {
+        "value": "XXXXXXXX"
+      },
+      "applicationDiagnosticsStorageAccountResourceGroup": {
         "value": "XXXXXXXX"
       }
     }
