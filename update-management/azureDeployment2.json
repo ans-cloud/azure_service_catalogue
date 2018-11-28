@@ -68,12 +68,11 @@
             "name": "[concat(parameters('workspaceName'), '/' , 'Automation')]",
             "apiVersion": "2015-11-01-preview",
             "properties": {
-                "resourceId": "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')]"
+                "resourceId": "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
             },
             "dependsOn": [
-                "[resourceId('microsoft.operationalinsights/workspaces', parameters('workspaces_workspace_db2cd3ca_ef11_4b80_8d07_854069624a34_ejp_name'))]",
-                "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')]",
-                "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName')]"
+                "[concat('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
+                "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
             ]
         }
     ]
