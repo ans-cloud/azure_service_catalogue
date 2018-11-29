@@ -61,6 +61,17 @@
                         {
                             "field": "properties.incidentType",
                             "equals": "Incident"
+                        },
+                        {
+                            "field": "properties.impactedServices[*].ImpactedRegions[*].RegionName",
+                            "equals": null,
+                            "containsAny": [
+                              "North Europe",
+                              "West Europe",
+                              "UK South",
+                              "UK West",
+                              "Global"
+                            ]
                         }
                     ]
                 },
