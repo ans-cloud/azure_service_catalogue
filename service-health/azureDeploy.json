@@ -84,7 +84,7 @@
                     ]
                 },
                 "enabled": true,
-                "description": ""
+                "description": "Notification of Service Alerts"
             },
             "dependsOn": [
                 "[resourceId('microsoft.insights/actionGroups', parameters('actionGroups_name'))]"
