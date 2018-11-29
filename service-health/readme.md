@@ -8,6 +8,6 @@
 </a>
 
 
-This template will configure Azure Service Health Alerts
+This template will create an Azure Service Health Alert and an Action Group. The service health alert will notify a specified email address of any Azure Service Issues.
 
 
