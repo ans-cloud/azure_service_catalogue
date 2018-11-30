@@ -17,6 +17,9 @@
       "workspaceName": {
           "value": "GEN-NAME"
       },
+      "workspaceResourceGroup":{
+        "value": "GEN-NAME"
+      },
       "ownerTag": {
           "value": "GEN-VALUE"
       },
