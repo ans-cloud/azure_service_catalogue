@@ -13,4 +13,4 @@ The VM will have an 128GB Managed OS Disk and a 1TB Managed Data Disk attached.
 
 As part of the deployment a new vNet and subnet are also deployed along with a Network Security Group and a Public IP address.
 
-This templatealso installs the Monitoring Agent extension and onboards the VM to a specified workspace. 
+This template also installs the Monitoring Agent extension and onboards the VM to a specified workspace. 
