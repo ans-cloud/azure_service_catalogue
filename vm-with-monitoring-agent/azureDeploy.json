@@ -68,6 +68,12 @@
           "description": "Log Analytics workspace name"
         }
     },
+    "workspaceResourceGroup": {
+      "type": "string",
+      "metadata": {
+        "description": "The Resource Group for the Log Analytics Workspace"
+      }
+  },
     "ownerTag":{
         "type": "string",
         "metadata": {
@@ -312,10 +318,10 @@
                 "typeHandlerVersion": "1.0",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                  "workspaceId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-03-20').customerId]"
+                  "workspaceId": "[reference(resourceId(parameters('workspaceResourceGroup'),'Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-03-20').customerId]"
                 },
                 "protectedSettings": {
-                  "workspaceKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-03-20').primarySharedKey]"
+                  "workspaceKey": "[listKeys(resourceId(parameters('workspaceResourceGroup'),'Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-03-20').primarySharedKey]"
                 }
               }
             }
