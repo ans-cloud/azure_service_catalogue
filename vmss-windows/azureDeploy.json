@@ -16,7 +16,7 @@
             "type": "string",
             "defaultValue": "Standard_A1",
             "metadata": {
-              "description": "Size of VMs in the VM Scale Set."
+              "description": "Size of VMs in the VM Scale Set. Use Get-AzureRmVMSize Powershell command to get a list of available sizes"
             }
         },
         "windowsOSVersion": {
