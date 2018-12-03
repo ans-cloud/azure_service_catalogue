@@ -55,10 +55,16 @@
       }
     },
     "administratorLogin": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Adminsitrator login name for the SQL Database"
+      }
     },
     "administratorLoginPassword": {
-      "type": "securestring"
+      "type": "securestring",
+      "metadata": {
+        "description": "Administrator password for the SQL Database"
+      }
     },
     "databaseName": {
       "type": "string"
@@ -73,11 +79,17 @@
       "allowedValues": [
         "Standard",
         "Premium"
-      ]
+      ],
+      "metadata": {
+        "description": "SQL database edition. Check Details at https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers"
+      }
     },
     "maxSizeBytes": {
       "type": "string",
-      "defaultValue": "1073741824"
+      "defaultValue": "1073741824",
+      "metadata": {
+        "description": "Maximum size of the database in bytes"
+      }
     },
     "requestedServiceObjectiveName": {
       "type": "string",
@@ -103,7 +115,10 @@
         "Standard_GRS",
         "Standard_RAGRS",
         "Premium_LRS"
-      ]
+      ],
+      "metadata": {
+        "description": "Storage Account Replication Type. See https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy"
+      }
     },
     "ownerTag":{
       "type": "string",
