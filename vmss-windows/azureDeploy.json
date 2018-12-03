@@ -10,7 +10,10 @@
             }
         },
         "vmssName": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Scale Set."
+              }
         },
         "vmSku": {
             "type": "string",
@@ -33,22 +36,37 @@
             }
         },
         "adminUsername": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Administrator username for virtual machines in the scale set"
+            }
         },
         "adminPassword": {
-            "type": "securestring"
+            "type": "securestring",
+            "metadata": {
+                "description": "Administrator password for virtual machines in the scale set"
+            }
         },
         "dnsLabel": {
             "type": "string"
         },
         "instanceCount": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Number of virtual machines in the scale set"
+            }
         },
         "autoscaleMin": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Minimum number of virtual machines in the scale set"
+            }
         },
         "autoscaleMax": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Maximum number of virtual machines in the scale set"
+            }
         },
         "powershelldscUpdateTagVersion": {
             "type": "string",
