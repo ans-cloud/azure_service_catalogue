@@ -22,10 +22,7 @@
       }
     },
     "vmName": {
-        "type": "string",
-        "metadata": {
-          "description": "Password for the Virtual Machine."
-        }
+        "type": "string"
     },
     "dnsLabelPrefix": {
       "type": "string",
