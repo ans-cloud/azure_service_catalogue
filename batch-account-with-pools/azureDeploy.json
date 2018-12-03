@@ -62,7 +62,7 @@
         "description": "number of low priority nodes"
       }
     },
-    "storageAccountsku": {
+    "storageAccountSku": {
       "type": "string",
       "defaultValue": "Standard_LRS",
       "allowedValues": [
@@ -92,7 +92,13 @@
       "type": "string"
     },
     "criticalityTag": {
-      "type": "string"
+      "type": "string",
+      "allowedValues": [
+        "Tier 1",
+        "Tier 2",
+        "Tier 3",
+        "Tier 4"
+      ]
     }
   },
   "variables": {
