@@ -20,7 +20,7 @@
     "outputs": {
         "projectID": {
             "type": "string",
-            "value": "[reference(parameters('projectname')).projectID]"
+            "value": "[reference(parameters('projectname')).customerWorkspaceId]"
           }
     }
 }
