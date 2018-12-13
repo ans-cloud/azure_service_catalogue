@@ -9,5 +9,3 @@
 
 
 This template will create an Azure Automation Account
-
-
