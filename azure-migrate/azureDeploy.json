@@ -1,0 +1,26 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "projectname": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-02-02",
+            "name": "[parameters('projectname')]",
+            "location": "eastus",
+            "type": "Microsoft.Migrate/projects",
+            "properties": {},
+            "dependsOn": [],
+            "comments": "Azure Migration project."
+        }
+    ],
+    "outputs": {
+        "projectID": {
+            "type": "string",
+            "value": "[reference(parameters('projectname')).projectID]"
+          }
+    }
+}
