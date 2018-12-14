@@ -50,6 +50,7 @@
     },
     "DdosPlanID": {
        "type": "string",
+       "defaultValue": "false",
        "metadata": {
             "description": "Use Get-AzureRmDdosProtectionPlan to obtain the Resource ID of your DDoS protection plan"
         }
@@ -88,6 +89,7 @@
   "variables": {},
   "resources": [
     {
+      "condition": "[equals(parameters('enableDdosProtection'), 'Yes')]",
       "apiVersion": "2018-06-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('vnetName')]",
@@ -104,9 +106,9 @@
             "[parameters('vnetAddressPrefix')]"
           ]
         },
-        "enableDdosProtection": "[if(equals(parameters('enableDdosProtection'), 'Yes'), bool('true'), bool('false'))]",
+        "enableDdosProtection": true,
         "ddosProtectionPlan":{
-            "id": "[if(equals(parameters('enableDdosProtection'),'Yes'), parameters('DdosPlanID'), resourceId('Microsoft.Network/ddosProtectionPlans', 'false'))]"
+            "id": "[parameters('DdosPlanID')]"
         }
       },
       "resources": [
@@ -123,6 +125,40 @@
           }
         }
       ]
-    }
+    },
+    {
+        "condition": "[equals(parameters('enableDdosProtection'), 'No')]",
+        "apiVersion": "2018-06-01",
+        "type": "Microsoft.Network/virtualNetworks",
+        "name": "[parameters('vnetName')]",
+        "location": "[parameters('location')]",
+        "tags": {
+          "owner": "[parameters('ownerTag')]",
+          "application": "[parameters('applicationTag')]",
+          "environment": "[parameters('environmentTag')]",
+          "criticality": "[parameters('criticalityTag')]"
+        },
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "[parameters('vnetAddressPrefix')]"
+            ]
+          }
+        },
+        "resources": [
+          {
+            "apiVersion": "2018-06-01",
+            "type": "subnets",
+            "location": "[parameters('location')]",
+            "name": "[parameters('subnetName')]",
+            "dependsOn": [
+              "[parameters('vnetName')]"
+            ],
+            "properties": {
+              "addressPrefix": "[parameters('subnetPrefix')]"
+            }
+          }
+        ]
+      }
   ]
 }
