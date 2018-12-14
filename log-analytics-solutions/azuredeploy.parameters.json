@@ -11,10 +11,7 @@
       "dataRetention": {
         "value": "X"
       },
-      "applicationDiagnosticsStorageAccountName": {
-        "value": "XXXXXXXX"
-      },
-      "applicationDiagnosticsStorageAccountResourceGroup": {
+      "StorageAccountName": {
         "value": "XXXXXXXX"
       }
     }
