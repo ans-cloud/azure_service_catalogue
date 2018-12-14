@@ -8,17 +8,11 @@
       "vnetAddressPrefix": {
           "value": "GEN-IP-RANGE"
       },
-      "subnet1Name": {
+      "subnetName": {
           "value": "GEN-NAME"
       },
-      "subnet1Prefix": {
+      "subnetPrefix": {
           "value": "GEN-IP-RANGE"
-      },
-      "subnet2Name": {
-          "value": "GEN-NAME"
-      },
-      "subnet2Prefix": {
-        "value": "GEN-IP-RANGE"
       },
       "ownerTag": {
         "value": "GEN-VALUE"

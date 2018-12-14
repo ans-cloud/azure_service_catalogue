@@ -37,24 +37,6 @@
         "description": "Location for all resources."
       }
     },
-    "enableDdosProtection": {
-       "type": "string",
-       "defaultValue": "No",
-       "allowedValues": [
-           "Yes",
-           "No"
-       ],
-       "metadata": {
-            "description": ""
-        }
-    },
-    "DdosPlanID": {
-       "type": "string",
-       "defaultValue": "false",
-       "metadata": {
-            "description": "Use Get-AzureRmDdosProtectionPlan to obtain the Resource ID of your DDoS protection plan"
-        }
-    },
     "ownerTag":{
         "type": "string",
         "metadata": {
@@ -86,12 +68,9 @@
         }
       }
   },
-  "variables": {
-      "ddosVnetName": "[concat(parameters('vnetName') , 'Ddos')]"
-  },
+  "variables": {},
   "resources": [
     {
-      "condition": "[equals(parameters('enableDdosProtection'), 'Yes')]",
       "apiVersion": "2018-06-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('vnetName')]",
@@ -107,10 +86,6 @@
           "addressPrefixes": [
             "[parameters('vnetAddressPrefix')]"
           ]
-        },
-        "enableDdosProtection": true,
-        "ddosProtectionPlan":{
-            "id": "[parameters('DdosPlanID')]"
         }
       },
       "resources": [
@@ -127,40 +102,6 @@
           }
         }
       ]
-    },
-    {
-        "condition": "[equals(parameters('enableDdosProtection'), 'No')]",
-        "apiVersion": "2018-06-01",
-        "type": "Microsoft.Network/virtualNetworks",
-        "name": "[variables('ddosVnetName')]",
-        "location": "[parameters('location')]",
-        "tags": {
-          "owner": "[parameters('ownerTag')]",
-          "application": "[parameters('applicationTag')]",
-          "environment": "[parameters('environmentTag')]",
-          "criticality": "[parameters('criticalityTag')]"
-        },
-        "properties": {
-          "addressSpace": {
-            "addressPrefixes": [
-              "[parameters('vnetAddressPrefix')]"
-            ]
-          }
-        },
-        "resources": [
-          {
-            "apiVersion": "2018-06-01",
-            "type": "subnets",
-            "location": "[parameters('location')]",
-            "name": "[parameters('subnetName')]",
-            "dependsOn": [
-              "[parameters('vnetName')]"
-            ],
-            "properties": {
-              "addressPrefix": "[parameters('subnetPrefix')]"
-            }
-          }
-        ]
-      }
+    }
   ]
 }
