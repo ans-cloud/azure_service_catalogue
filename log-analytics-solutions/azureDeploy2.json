@@ -35,12 +35,6 @@
           "metadata": {
             "description": "Name of the storage account for Azure diagnostics output"
           }
-      },
-      "applicationDiagnosticsStorageAccountResourceGroup": {
-          "type": "string",
-          "metadata": {
-            "description": "The resource group name containing the storage account with Azure diagnostics output"
-          }
       }
     },
     "variables": {
@@ -56,7 +50,7 @@
         "Name": "[Concat('SQLAssessment', '(', parameters('workspaceName'), ')')]",
         "GalleryName": "SQLAssessment"
       },
-      "diagnosticsStorageAccount": "[resourceId(parameters('applicationDiagnosticsStorageAccountResourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('StorageAccountName'))]"
+      "diagnosticsStorageAccount": "[resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName'))]"
     },
     "resources": [
       {
