@@ -86,7 +86,9 @@
         }
       }
   },
-  "variables": {},
+  "variables": {
+      "ddosVnetName": "[concat(parameters('vnetName') , 'Ddos')]"
+  },
   "resources": [
     {
       "condition": "[equals(parameters('enableDdosProtection'), 'Yes')]",
@@ -130,7 +132,7 @@
         "condition": "[equals(parameters('enableDdosProtection'), 'No')]",
         "apiVersion": "2018-06-01",
         "type": "Microsoft.Network/virtualNetworks",
-        "name": "[parameters('vnetName')]",
+        "name": "[variables('ddosVnetName')]",
         "location": "[parameters('location')]",
         "tags": {
           "owner": "[parameters('ownerTag')]",
