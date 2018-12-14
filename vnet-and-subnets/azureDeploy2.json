@@ -1,73 +1,128 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "virtualNetworks_VNETA_name": {
-            "defaultValue": "VNETA",
-            "type": "string"
-        },
-        "subnets_default_name": {
-            "defaultValue": "default",
-            "type": "string"
-        },
-        "virtualNetworks_VNETA_id": {
-            "defaultValue": "/subscriptions/b6d0873e-230c-4b18-bcf3-bf6653f54be9/resourceGroups/test/providers/Microsoft.Network/ddosProtectionPlans/testddosplan",
-            "type": "string"
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "VNet1",
+      "metadata": {
+        "description": "VNet name"
+      }
+    },
+    "vnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/16",
+      "metadata": {
+        "description": "Address prefix"
+      }
+    },
+    "subnetName": {
+        "type": "string",
+        "defaultValue": "Subnet1",
+        "metadata": {
+          "description": "Subnet 1 Name"
         }
     },
-    "variables": {},
-    "resources": [
-        {
-            "comments": "Generalized from resource: '/subscriptions/b6d0873e-230c-4b18-bcf3-bf6653f54be9/resourceGroups/VNETA/providers/Microsoft.Network/virtualNetworks/VNETA'.",
-            "type": "Microsoft.Network/virtualNetworks",
-            "name": "[parameters('virtualNetworks_VNETA_name')]",
-            "apiVersion": "2018-08-01",
-            "location": "eastus",
-            "scale": null,
-            "properties": {
-                "provisioningState": "Succeeded",
-                "resourceGuid": "d4e20a7b-5c1a-49ce-b303-2e0f54611240",
-                "addressSpace": {
-                    "addressPrefixes": [
-                        "10.1.0.0/16"
-                    ]
-                },
-                "subnets": [
-                    {
-                        "name": "default",
-                        "etag": "W/\"4374b5fb-26c8-44fa-bee0-ea7d5d97f625\"",
-                        "properties": {
-                            "provisioningState": "Succeeded",
-                            "addressPrefix": "10.1.0.0/24",
-                            "serviceEndpoints": [],
-                            "delegations": []
-                        }
-                    }
-                ],
-                "virtualNetworkPeerings": [],
-                "enableDdosProtection": true,
-                "enableVmProtection": false,
-                "ddosProtectionPlan": {
-                    "id": "[parameters('virtualNetworks_VNETA_id')]"
-                }
-            },
-            "dependsOn": []
-        },
-        {
-            "comments": "Generalized from resource: '/subscriptions/b6d0873e-230c-4b18-bcf3-bf6653f54be9/resourceGroups/VNETA/providers/Microsoft.Network/virtualNetworks/VNETA/subnets/default'.",
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "name": "[concat(parameters('virtualNetworks_VNETA_name'), '/', parameters('subnets_default_name'))]",
-            "apiVersion": "2018-08-01",
-            "scale": null,
-            "properties": {
-                "provisioningState": "Succeeded",
-                "addressPrefix": "10.1.0.0/24",
-                "serviceEndpoints": [],
-                "delegations": []
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_VNETA_name'))]"
-            ]
+    "subnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/24",
+      "metadata": {
+        "description": "Subnet 1 Prefix"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "enableDdosProtection": {
+       "type": "string",
+       "defaultValue": "No",
+       "allowedValues": [
+           "Yes",
+           "No"
+       ],
+       "metadata": {
+            "description": ""
         }
-    ]
+    },
+    "DdosPlanID": {
+       "type": "string",
+       "metadata": {
+            "description": "Use Get-AzureRmDdosProtectionPlan to obtain the Resource ID of your DDoS protection plan"
+        }
+    },
+    "ownerTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Name of the owner of the VM"
+        }
+      },
+      "applicationTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Application the VM belongs to"
+        }
+      },
+      "environmentTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Environment the VM belongs to. E.g. Dev, Test, Prod"
+        }
+      },
+      "criticalityTag":{
+        "type": "string",
+        "allowedValues": [
+            "Tier 1",
+            "Tier 2",
+            "Tier 3",
+            "Tier 4"
+        ],
+        "metadata": {
+            "description": "Business criticality of the application. Tier 1 is the highest criticality"
+        }
+      }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2018-06-01",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('vnetName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnetAddressPrefix')]"
+          ]
+        },
+        "enableDdosProtection": "[if(equals(parameters('enableDdosProtection'), 'Yes'), bool('true'), bool('false'))]",
+        "ddosProtectionPlan":{
+            "id": "[parameters('DdosPlanID')]"
+        }
+      },
+      "resources": [
+        {
+          "apiVersion": "2018-06-01",
+          "type": "subnets",
+          "location": "[parameters('location')]",
+          "name": "[parameters('subnetName')]",
+          "dependsOn": [
+            "[parameters('vnetName')]"
+          ],
+          "properties": {
+            "addressPrefix": "[parameters('subnetPrefix')]"
+          }
+        }
+      ]
+    }
+  ]
 }
