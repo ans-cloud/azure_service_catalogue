@@ -106,7 +106,8 @@
         },
         "enableDdosProtection": "[if(equals(parameters('enableDdosProtection'), 'Yes'), bool('true'), bool('false'))]",
         "ddosProtectionPlan":{
-            "id": "[parameters('DdosPlanID')]"
+            "id": "[parameters('DdosPlanID')]",
+            "id": "[if(equals(parameters('enableDdosProtection'),'Yes'), parameters('DdosPlanID'), resourceId('Microsoft.Network/virtualNetworks', 'false'))]"
         }
       },
       "resources": [
