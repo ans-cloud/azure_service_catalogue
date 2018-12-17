@@ -9,12 +9,7 @@
             }
         }
     },
-    "variables": {
-        "runbookName": "StartAzureV2Vm",
-        "scriptUri": "https://gallery.technet.microsoft.com/scriptcenter/Start-Azure-ARM-VMs-66fb875d/file/162482/1/StartAzureV2Vm.graphrunbook",
-        "runbookDescription": "Automatically Start VMs",
-        "sku": "Basic"
-    },
+    "variables": {},
     "resources": [
       {
         "name": "[parameters('accountName')]",
@@ -25,12 +20,12 @@
         "tags": { },
         "properties": {
           "sku": {
-            "name": "[variables('sku')]"
+            "name": "Basic"
           }
         },
         "resources": [
           {
-            "name": "[variables('runbookName')]",
+            "name": "StartAzureV2Vm",
             "type": "runbooks",
             "apiVersion": "2015-01-01-preview",
             "location": "[resourceGroup().location]",
@@ -42,9 +37,29 @@
               "runbookType": "GraphPowerShell",
               "logProgress": "false",
               "logVerbose": "false",
-              "description": "[variables('runbookDescription')]",
+              "description": "This Graphical PowerShell runbook connects to Azure using an Automation Run As account and starts all V2 VMs in an Azure subscription or in a resource group or a single named V2 VM. You can attach a recurring schedule to this runbook to run it at a specific time. ",
               "publishContentLink": {
-                "uri": "[variables('scriptUri')]",
+                "uri": "https://gallery.technet.microsoft.com/scriptcenter/Start-Azure-ARM-VMs-66fb875d/file/162482/1/StartAzureV2Vm.graphrunbook",
+                "version": "1.0.0.0"
+              }
+            }
+          },
+          {
+            "name": "StopAzureV2Vm",
+            "type": "runbooks",
+            "apiVersion": "2015-01-01-preview",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+            ],
+            "tags": { },
+            "properties": {
+              "runbookType": "GraphPowerShell",
+              "logProgress": "false",
+              "logVerbose": "false",
+              "description": "This Graphical PowerShell runbook connects to Azure using an Automation Run As account and stops all V2 VMs in an Azure subscription or in a resource group or a single named V2 VM. You can attach a recurring schedule to this runbook to run it at a specific time.",
+              "publishContentLink": {
+                "uri": "https://gallery.technet.microsoft.com/scriptcenter/Stop-Azure-ARM-VMs-1ba96d5b/file/162480/1/StopAzureV2Vm.graphrunbook",
                 "version": "1.0.0.0"
               }
             }
