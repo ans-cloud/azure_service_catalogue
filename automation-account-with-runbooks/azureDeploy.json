@@ -1,0 +1,42 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "automationAccountName": {
+            "defaultValue": "",
+            "type": "string",
+            "metadata": {
+                "description": "Automation account name"
+            }
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2015-10-31",
+            "type": "Microsoft.Automation/automationAccounts",
+            "name": "[parameters('automationAccountName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "sku": {
+                    "name": "Basic"
+                }
+            }
+        },
+        {
+            "name": "StartAzureV2Vm",
+            "type": "Microsoft.Automation/automationAccounts/runbooks",
+            "apiVersion": "2018-06-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+              "runbookType": "GraphPowerShell",
+              "draft": {
+                "inEdit": true,
+                "draftContentLink": {
+                  "uri": "https://gallery.technet.microsoft.com/scriptcenter/Start-Azure-ARM-VMs-66fb875d/file/162482/1/StartAzureV2Vm.graphrunbook",
+                  "version": "1.0.0.0"
+                }
+              }
+            }
+          }
+    ]
+}
