@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0",
     "parameters": {
-        "accountName": {
+        "automationAccountName": {
             "type": "string",
             "metadata": {
                 "description": "The name of the Azure Automation account to deploy to."
@@ -12,7 +12,7 @@
     "variables": {},
     "resources": [
       {
-        "name": "[parameters('accountName')]",
+        "name": "[parameters('automationAccountName')]",
         "type": "Microsoft.Automation/automationAccounts",
         "apiVersion": "2015-01-01-preview",
         "location": "[resourceGroup().location]",
@@ -30,7 +30,7 @@
             "apiVersion": "2015-01-01-preview",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
             ],
             "tags": { },
             "properties": {
@@ -50,7 +50,7 @@
             "apiVersion": "2015-01-01-preview",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
             ],
             "tags": { },
             "properties": {
@@ -70,7 +70,7 @@
             "apiVersion": "2015-01-01-preview",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
             ],
             "tags": { },
             "properties": {
@@ -88,7 +88,7 @@
             "apiVersion": "2015-01-01-preview",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
             ],
             "tags": { },
             "properties": {
