@@ -63,6 +63,42 @@
                 "version": "1.0.0.0"
               }
             }
+          },
+          {
+            "name": "ChangeBlobTiers",
+            "type": "runbooks",
+            "apiVersion": "2015-01-01-preview",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+            ],
+            "tags": { },
+            "properties": {
+              "runbookType": "PowerShell",
+              "description": "This script will scan a designated storage account for all blobs, it will then set the tier (Hot, Cool or Archive) for each blob that is older then a retention period or days in which you specify.Setting object level access tier is only supported for Standard LRS, GRS, and RA-GRS",
+              "publishContentLink": {
+                "uri": "https://gallery.technet.microsoft.com/Change-Azure-Storage-Blob-2a337b6f/file/200502/1/Azure%20-%20Change%20Azure%20Storage%20Tiers2.ps1",
+                "version": "1.0.0.0"
+              }
+            }
+          },
+          {
+            "name": "OrphanedDisks",
+            "type": "runbooks",
+            "apiVersion": "2015-01-01-preview",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+            ],
+            "tags": { },
+            "properties": {
+              "runbookType": "PowerShell",
+              "description": "PowerShell script to automate identifying \"Orphaned Disks\" in an Azure subscription. An Orphaned Disk is a Disk that does NOT have an \"Active Lease\" (Unmanaged Disks) or does NOT have a \"ManagedBy\" property set to a VM (Managed Disks). ",
+              "publishContentLink": {
+                "uri": "https://gallery.technet.microsoft.com/Azure-Identify-and-baaf6a10/file/203701/1/azure-get-orphaned-disks.ps1",
+                "version": "1.0.0.0"
+              }
+            }
           }
         ]
       }
