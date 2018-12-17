@@ -63,6 +63,23 @@
                 "version": "1.0.0.0"
               }
             }
+          },
+          {
+            "name": "AzureInventory",
+            "type": "runbooks",
+            "apiVersion": "2015-01-01-preview",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+            ],
+            "tags": { },
+            "properties": {
+              "runbookType": "PowerShell",
+              "publishContentLink": {
+                "uri": "https://gallery.technet.microsoft.com/scriptcenter/Azure-Inventory-using-3db0f658/file/218278/1/AzureInventory_V2.ps1",
+                "version": "1.0.0.0"
+              }
+            }
           }
         ]
       }
