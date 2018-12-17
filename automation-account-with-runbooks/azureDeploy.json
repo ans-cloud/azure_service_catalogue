@@ -1,42 +1,56 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
+    "contentVersion": "1.0",
     "parameters": {
-        "automationAccountName": {
-            "defaultValue": "",
+        "accountName": {
             "type": "string",
             "metadata": {
-                "description": "Automation account name"
+                "description": "The name of the Azure Automation account to deploy to."
             }
         }
     },
+    "variables": {
+        "runbookName": "StartAzureV2Vm",
+        "scriptUri": "https://gallery.technet.microsoft.com/scriptcenter/Start-Azure-ARM-VMs-66fb875d/file/162482/1/StartAzureV2Vm.graphrunbook",
+        "runbookDescription": "Automatically Start VMs",
+        "sku": "Basic"
+    },
     "resources": [
-        {
-            "apiVersion": "2015-10-31",
-            "type": "Microsoft.Automation/automationAccounts",
-            "name": "[parameters('automationAccountName')]",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "sku": {
-                    "name": "Basic"
-                }
-            }
+      {
+        "name": "[parameters('accountName')]",
+        "type": "Microsoft.Automation/automationAccounts",
+        "apiVersion": "2015-01-01-preview",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [ ],
+        "tags": { },
+        "properties": {
+          "sku": {
+            "name": "[variables('sku')]"
+          }
         },
-        {
-            "name": " StartAzureV2Vm",
-            "type": "Microsoft.Automation/automationAccounts/runbooks",
-            "apiVersion": "2018-06-30",
+        "resources": [
+          {
+            "name": "[variables('runbookName')]",
+            "type": "runbooks",
+            "apiVersion": "2015-01-01-preview",
             "location": "[resourceGroup().location]",
+            "dependsOn": [
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+            ],
+            "tags": { },
             "properties": {
               "runbookType": "GraphPowerShell",
-              "draft": {
-                "inEdit": true,
-                "draftContentLink": {
-                  "uri": "https://gallery.technet.microsoft.com/scriptcenter/Start-Azure-ARM-VMs-66fb875d/file/162482/1/StartAzureV2Vm.graphrunbook",
-                  "version": "1.0.0.0"
-                }
+              "logProgress": "false",
+              "logVerbose": "false",
+              "description": "[variables('runbookDescription')]",
+              "publishContentLink": {
+                "uri": "[variables('scriptUri')]",
+                "version": "1.0.0.0"
               }
             }
           }
-    ]
+        ]
+      }
+    ],
+    "outputs": {}
 }
