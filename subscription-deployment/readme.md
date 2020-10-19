@@ -1,4 +1,4 @@
-# New Azure Subscription and Resource Group
+# New Azure Subscription
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fans-cloud%2Fazure_service_catalogue%2Fmaster%2Fsubscription-deployment%2FazureDeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -7,7 +7,7 @@
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-This template will create a new Azure Subscription and a Resource Group within it.
+This template will create a new Azure Subscription.
 
 You must have an owner, contributor, or Azure subscription creator role on an invoice section or owner or contributor role on a billing profile or a billing account to create subscriptions.
 

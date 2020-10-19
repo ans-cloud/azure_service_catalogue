@@ -1,19 +1,37 @@
 {
 	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
-	"variables": {
-		"uniqueAliasName": "sampleAlias"
+	"parameters": {
+		"invoiceSectionID": {
+			"type": "string",
+			"metadata": {
+				"description": "enter your Invoice section ID"
+			}
 		},
-	
+		"subscriptionDisplayName": {
+			"type": "string",
+			"metadata": {
+				"description": "enter a name for the subscription"
+			}
+		},
+		"uniqueAliasName": {
+			"type": "string",
+			"defaultValue": "sampleAlias",
+			"metadata": {
+				"description": "description"
+			}
+		}
+	},
+	"variables": {},
     "resources": [
 		{
-			"name": "[variables('uniqueAliasName')]",
+			"name": "[parameters('uniqueAliasName')]",
 			"type": "Microsoft.Subscription/aliases",
 			"apiVersion": "2020-09-01",
 			"properties": {
 				"workLoad": "Production",
-				"displayName": "Dev Team subscription",
-				"billingScope": "/providers/Microsoft.Billing/billingAccounts/5e98e158-xxxx-xxxx-xxxx-xxxxxxxxxxxx:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx_xxxx-xx-xx/billingProfiles/AW4F-xxxx-xxx-xxx/invoiceSections/SH3V-xxxx-xxx-xxx"
+				"displayName": "[parameters('subscriptionDisplayName')]",
+				"billingScope": "[parameters('invoiceSectionID')]"
 				},
 			"dependsOn": [],
 			"tags": {}
