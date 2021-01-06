@@ -4,7 +4,7 @@
     "metadata": {
       "description": "This template deploys an Azure automation account with runbook.",
       "author": "ANS Group"
-    }
+    },
     "parameters": {
         "automationAccountName": {
             "type": "string",
