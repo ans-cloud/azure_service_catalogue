@@ -1,6 +1,10 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0",
+    "metadata": {
+      "description": "This template deploys an Azure automation account with runbook.",
+      "author": "ANS Group"
+    }
     "parameters": {
         "automationAccountName": {
             "type": "string",
