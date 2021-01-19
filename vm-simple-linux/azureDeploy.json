@@ -2,13 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "location": {
-        "type": "string",
-        "defaultValue": "[resourceGroup().location]",
-        "metadata": {
-          "description": "Location for all resources."
-        }
-    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -90,6 +83,7 @@
     }
   },
   "variables": {
+    "location": "[resourceGroup().location]",
     "storageAccountName": "[toLower(concat(parameters('vmName') , uniquestring(resourceGroup().id)))]",
     "nicName": "[concat(parameters('vmName'), '-nic')]",
     "imagePublisher": "Canonical",
@@ -110,7 +104,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
       "apiVersion": "2017-06-01",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
@@ -127,7 +121,7 @@
       "apiVersion": "2017-04-01",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
@@ -145,7 +139,7 @@
       "apiVersion": "2017-04-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
@@ -175,7 +169,7 @@
         "type": "Microsoft.Network/networkSecurityGroups",
         "apiVersion": "2017-03-01",
         "name": "[variables('nsgName')]",
-        "location": "[parameters('location')]",
+        "location": "[variables('location')]",
         "tags": {
             "owner": "[parameters('ownerTag')]",
             "application": "[parameters('applicationTag')]",
@@ -205,7 +199,7 @@
       "apiVersion": "2017-04-01",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('nicName')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
@@ -240,7 +234,7 @@
       "apiVersion": "2017-03-30",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('vmName')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
