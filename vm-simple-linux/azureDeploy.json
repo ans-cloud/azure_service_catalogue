@@ -109,7 +109,8 @@
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
-        "criticality": "[parameters('criticalityTag')]"
+        "criticality": "[parameters('criticalityTag')]",
+        "glassDeployment": "true,"
       },
       "sku": {
         "name": "[variables('storageAccountType')]"
