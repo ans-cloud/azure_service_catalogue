@@ -120,7 +120,8 @@
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
-        "criticality": "[parameters('criticalityTag')]"
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
       },
       "properties": {}
     },
@@ -134,7 +135,8 @@
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
-        "criticality": "[parameters('criticalityTag')]"
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
       },
       "properties": {
         "autoStorage": {
