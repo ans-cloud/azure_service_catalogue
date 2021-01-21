@@ -77,7 +77,6 @@
       "apiVersion": "2015-05-01-preview",
       "location": "[variables('location')]",
       "tags": {
-        "ObjectName": "[variables('storageAccountName')]",
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
@@ -97,7 +96,6 @@
           "apiVersion": "2015-05-01-preview",
           "location": "[variables('location')]",
           "tags": {
-            "ObjectName": "[variables('storageAccountName')]",
             "owner": "[parameters('ownerTag')]",
             "application": "[parameters('applicationTag')]",
             "environment": "[parameters('environmentTag')]",
