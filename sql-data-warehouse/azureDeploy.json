@@ -45,25 +45,45 @@
       ],
       "metadata": {
         "description": "Performance Level"
-      }
-    },
-    "location": {
-      "defaultValue": "[resourceGroup().location]",
-      "type": "string",
-      "metadata": {
-        "description": "Resource location"
+      },
+      "ownerTag": {
+        "type": "string"
+      },
+      "applicationTag": {
+        "type": "string"
+      },
+      "environmentTag": {
+        "type": "string"
+      },
+      "criticalityTag": {
+        "type": "string",
+        "allowedValues": [
+          "Tier 1",
+          "Tier 2",
+          "Tier 3",
+          "Tier 4"
+        ]
       }
     }
   },
   "variables": {
-    "sqlServerName": "[concat(parameters('dataWarehouseName'), 'srv')]"
+    "sqlServerName": "[concat(parameters('dataWarehouseName'), 'srv')]",
+    "location": "[resourceGroup().location]"
   },
   "resources": [
     {
       "name": "[variables('sqlServerName')]",
       "type": "Microsoft.Sql/servers",
       "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
+      "tags": {
+        "ObjectName": "[variables('storageAccountName')]",
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "properties": {
         "administratorLogin": "[parameters('sqlAdministratorLogin')]",
         "administratorLoginPassword": "[parameters('sqlAdministratorPassword')]",
@@ -75,7 +95,15 @@
           "kind": "v12.0,user,datawarehouse",
           "name": "[parameters('dataWarehouseName')]",
           "apiVersion": "2015-05-01-preview",
-          "location": "[parameters('location')]",
+          "location": "[variables('location')]",
+          "tags": {
+            "ObjectName": "[variables('storageAccountName')]",
+            "owner": "[parameters('ownerTag')]",
+            "application": "[parameters('applicationTag')]",
+            "environment": "[parameters('environmentTag')]",
+            "criticality": "[parameters('criticalityTag')]",
+            "ansServiceCatalog": "true"
+          },
           "scale": null,
           "properties": {
             "edition": "DataWarehouse",
