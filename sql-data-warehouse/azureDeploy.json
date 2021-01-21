@@ -45,25 +45,25 @@
       ],
       "metadata": {
         "description": "Performance Level"
-      },
-      "ownerTag": {
-        "type": "string"
-      },
-      "applicationTag": {
-        "type": "string"
-      },
-      "environmentTag": {
-        "type": "string"
-      },
-      "criticalityTag": {
-        "type": "string",
-        "allowedValues": [
-          "Tier 1",
-          "Tier 2",
-          "Tier 3",
-          "Tier 4"
-        ]
       }
+    },
+    "ownerTag": {
+      "type": "string"
+    },
+    "applicationTag": {
+      "type": "string"
+    },
+    "environmentTag": {
+      "type": "string"
+    },
+    "criticalityTag": {
+      "type": "string",
+      "allowedValues": [
+        "Tier 1",
+        "Tier 2",
+        "Tier 3",
+        "Tier 4"
+      ]
     }
   },
   "variables": {
