@@ -48,23 +48,23 @@
       }
     },
     "ownerTag": {
-      "type": "string"
+        "type": "string"
     },
     "applicationTag": {
-      "type": "string"
+        "type": "string"
     },
     "environmentTag": {
-      "type": "string"
+        "type": "string"
     },
-    "criticalityTag": {
-      "type": "string",
-      "allowedValues": [
-        "Tier 1",
-        "Tier 2",
-        "Tier 3",
-        "Tier 4"
-      ]
-    }
+      "criticalityTag": {
+        "type": "string",
+        "allowedValues": [
+          "Tier 1",
+          "Tier 2",
+          "Tier 3",
+          "Tier 4"
+        ]
+      }
   },
   "variables": {
     "sqlServerName": "[concat(parameters('dataWarehouseName'), 'srv')]",
