@@ -47,6 +47,36 @@
       "metadata": {
         "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version. Allowed values: 12.04.5-LTS, 14.04.2-LTS, 15.10."
       }
+    },
+    "ownerTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Name of the owner of the VM"
+      }
+    },
+    "applicationTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Application the VM belongs to"
+      }
+    },
+    "environmentTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Environment the VM belongs to. E.g. Dev, Test, Prod"
+      }
+    },
+    "criticalityTag":{
+      "type": "string",
+      "allowedValues": [
+          "Tier 1",
+          "Tier 2",
+          "Tier 3",
+          "Tier 4"
+      ],
+      "metadata": {
+          "description": "Business criticality of the application. Tier 1 is the highest criticality"
+      }
     }
   },
   "variables": {
@@ -72,6 +102,13 @@
         "count": "[variables('numVMs')]"
       },
       "location": "[resourceGroup().location]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
         "dnsSettings": {
@@ -84,6 +121,13 @@
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -109,6 +153,13 @@
         "count": "[variables('numVMs')]"
       },
       "location": "[resourceGroup().location]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'), copyIndex())]",
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
@@ -135,6 +186,13 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(parameters('vmName'), copyIndex())]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "copy": {
         "name": "vmLoop",
         "count": "[variables('numVMs')]"
@@ -198,6 +256,13 @@
       "type": "Microsoft.Network/trafficManagerProfiles",
       "name": "VMEndpointExample",
       "location": "global",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'), '0')]",
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'), '1')]",
