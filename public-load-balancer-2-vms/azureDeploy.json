@@ -99,7 +99,37 @@
       "metadata": {
         "description": "Size of the VM"
       }
-    }
+    },
+    "ownerTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Name of the owner of the VM"
+      }
+  },
+  "applicationTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Application the VM belongs to"
+      }
+  },
+  "environmentTag":{
+      "type": "string",
+      "metadata": {
+          "description": "Environment the VM belongs to. E.g. Dev, Test, Prod"
+      }
+  },
+  "criticalityTag":{
+      "type": "string",
+      "allowedValues": [
+          "Tier 1",
+          "Tier 2",
+          "Tier 3",
+          "Tier 4"
+      ],
+      "metadata": {
+          "description": "Business criticality of the application. Tier 1 is the highest criticality"
+      }
+  }
   },
   "variables": {
     "storageAccountType": "Standard_LRS",
@@ -122,6 +152,13 @@
       "name": "[parameters('storageAccountName')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "properties": {
         "accountType": "[variables('storageAccountType')]"
       }
@@ -142,6 +179,13 @@
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[parameters('publicIPAddressName')]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
         "dnsSettings": {
@@ -154,6 +198,13 @@
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('vnetName')]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -212,6 +263,13 @@
       "name": "[parameters('lbName')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "sku": {
         "name": "[parameters('lbSku')]"
       },
@@ -303,6 +361,13 @@
         "count": "[variables('numberOfInstances')]"
       },
       "location": "[resourceGroup().location]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog": "true"
+      },
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
         "[concat('Microsoft.Network/networkInterfaces/', parameters('nicNamePrefix'), copyindex())]",
