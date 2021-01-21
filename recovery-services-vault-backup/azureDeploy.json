@@ -103,13 +103,14 @@
       "type": "Microsoft.RecoveryServices/vaults",
       "apiVersion": "2015-11-10",
       "name": "[parameters('vaultName')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
-        "displayName": "SqlServer"
+        "displayName": "SqlServer",
+        "ansServiceCatalog": "true"
       },
       "sku": {
         "name": "RS0",
@@ -124,7 +125,7 @@
       "dependsOn": [
         "[concat('Microsoft.RecoveryServices/vaults/', parameters('vaultName'))]"
       ],
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "properties": {
         "backupManagementType": "AzureIaasVM",
         "schedulePolicy": {
