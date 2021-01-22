@@ -29,7 +29,7 @@
       }
     },
     "dailyRetentionDurationCount": {
-      "type": "int",
+      "type": "string",
       "metadata": {
         "description": "Number of days you want to retain the daily backup"
       }
@@ -41,13 +41,13 @@
       }
     },
     "weeklyRetentionDurationCount": {
-      "type": "int",
+      "type": "string",
       "metadata": {
         "description": "Number of weeks you want to retain the backup"
       }
     },
     "monthlyRetentionDurationCount": {
-      "type": "int",
+      "type": "string",
       "metadata": {
         "description": "Number of months you want to retain the backup"
       }
@@ -59,7 +59,7 @@
       }
     },
     "yearlyRetentionDurationCount": {
-      "type": "int",
+      "type": "string",
       "metadata": {
         "description": "Number of years you want to retain the backup"
       }
