@@ -51,13 +51,13 @@
       ]
     },
     "dedicatedNodes": {
-      "type": "int",
+      "type": "string",
       "metadata": {
         "description": "number of dedicated nodes"
       }
     },
     "lowPriorityNodes": {
-      "type": "int",
+      "type": "string",
       "metadata": {
         "description": "number of low priority nodes"
       }
