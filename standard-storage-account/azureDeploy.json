@@ -22,13 +22,6 @@
           "description": "Storage Account type"
         }
       },
-      "location": {
-        "type": "string",
-        "defaultValue": "[resourceGroup().location]",
-        "metadata": {
-          "description": "Location for all resources."
-        }
-      },
       "ownerTag":{
         "type": "string",
         "metadata": {
@@ -61,6 +54,7 @@
       }
     },
     "variables": {
+      "location": "[resourceGroup().location]",
       "storageAccountName": "[concat(parameters('storageAccountPrefix'), uniqueString(resourceGroup().id))]"
     },
     "resources": [
@@ -68,12 +62,13 @@
         "type": "Microsoft.Storage/storageAccounts",
         "name": "[variables('storageAccountName')]",
         "apiVersion": "2018-02-01",
-        "location": "[parameters('location')]",
+        "location": "[variables('location')]",
         "tags": {
           "owner": "[parameters('ownerTag')]",
           "application": "[parameters('applicationTag')]",
           "environment": "[parameters('environmentTag')]",
-          "criticality": "[parameters('criticalityTag')]"
+          "criticality": "[parameters('criticalityTag')]",
+          "ansServiceCatalog": "true"
         },
         "sku": {
           "name": "[parameters('storageAccountType')]"
