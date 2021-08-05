@@ -8,4 +8,4 @@
 </a>
 
 
-This template will create an Azure Purview Account
+This template will create an Azure Purview Account 
