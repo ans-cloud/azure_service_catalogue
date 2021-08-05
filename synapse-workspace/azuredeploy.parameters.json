@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "customerPrefix": {
+      "value": "ans"
+    },
+    "storageAccountType": {
+      "value": "Standard_LRS"
+    },
+    "sqlAdministratorLogin": {
+      "value": "sqladmin"
+    },
+    "sqlAdministratorLoginPassword": {
+      "value": "XXXXXXXX"
+    },
+    "ownerTag": {
+      "value": "XXXXXXXX"
+    },
+    "applicationTag": {
+      "value": "Datalake"
+    },
+    "environmentTag": {
+      "value": "Prod"
+    },
+    "criticalityTag": {
+      "value": "Tier 1"
+    }
+  }
+}

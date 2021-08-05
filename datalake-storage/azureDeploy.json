@@ -4,6 +4,7 @@
     "parameters": {
         "storageAccountPrefix": {
             "type": "string",
+            "defaultValue": "ans",
             "maxLength": 11,
             "metadata": {
                 "description": "Prefix for the data lake storage account name, alphanumeric only"
