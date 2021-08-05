@@ -1,0 +1,89 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "purviewAccountName": {
+            "defaultValue": "",
+            "type": "string",
+            "metadata": {
+                "description": "Purview account name"
+            }
+        },
+        "purviewCapactity": {
+            "defaultValue": 4,
+            "type": "int",
+            "allowedValues": [
+                4,
+                16
+            ],
+            "metadata": {
+                "description": "Purview Capacity"
+            }
+        },
+        "ownerTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the owner of the resource"
+            }
+        },
+        "applicationTag": {
+            "defaultValue": "Purview",
+            "type": "string",
+            "metadata": {
+                "description": "Application the resource belongs to"
+            }
+        },
+        "environmentTag": {
+            "defaultValue": "Prod",
+            "type": "string",
+            "metadata": {
+                "description": "Environment the resource belongs to. E.g. Dev, Test, Prod"
+            }
+        },
+        "criticalityTag": {
+            "type": "string",
+            "allowedValues": [
+                "Tier 1",
+                "Tier 2",
+                "Tier 3",
+                "Tier 4"
+            ],
+            "metadata": {
+                "description": "Business criticality of the application. Tier 1 is the highest criticality"
+            }
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "managedResourceGroupName": "[concat('managed-', resourceGroup().name)]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2020-12-01-preview",
+            "type": "Microsoft.Purview/accounts",
+            "name": "[parameters('purviewAccountName')]",
+            "location": "[variables('location')]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "publicNetworkAccess": "Enabled",
+                "managedResourceGroupName": "[variables('managedResourceGroupName')]"
+            },
+            "sku": {
+                "name": "Standard",
+                "capacity": "[parameters('purviewCapactity')]"
+            },
+            "dependsOn": [],
+            "tags": {
+                "owner": "[parameters('ownerTag')]",
+                "application": "[parameters('applicationTag')]",
+                "environment": "[parameters('environmentTag')]",
+                "criticality": "[parameters('criticalityTag')]",
+                "displayName": "PurviewAccount",
+                "ansServiceCatalog": "true"
+            }
+        }
+    ],
+    "outputs": {}
+}
