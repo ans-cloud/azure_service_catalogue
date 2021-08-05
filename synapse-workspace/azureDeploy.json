@@ -1,0 +1,253 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "customerPrefix": {
+            "type": "string",
+            "defaultValue": "ans",
+            "maxLength": 11,
+            "metadata": {
+                "description": "Prefix for the data lake storage account name, alphanumeric only"
+            }
+        },
+        "datalakeStorageAccountType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_ZRS",
+                "Premium_LRS"
+            ],
+            "metadata": {
+                "description": "Storage Account type"
+            }
+        },
+        "sqlAdministratorLogin": {
+            "type": "string",
+            "defaultValue": "sqladmin"
+        },
+        "sqlAdministratorLoginPassword": {
+            "type": "secureString",
+            "defaultValue": ""
+        },
+        "ownerTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the owner of the resource"
+            }
+        },
+        "applicationTag": {
+            "defaultValue": "Synapse Workspace",
+            "type": "string",
+            "metadata": {
+                "description": "Application the resource belongs to"
+            }
+        },
+        "environmentTag": {
+            "defaultValue": "Prod",
+            "type": "string",
+            "metadata": {
+                "description": "Environment the resource belongs to. E.g. Dev, Test, Prod"
+            }
+        },
+        "criticalityTag": {
+            "type": "string",
+            "defaultValue": "Tier 1",
+            "allowedValues": [
+                "Tier 1",
+                "Tier 2",
+                "Tier 3",
+                "Tier 4"
+            ],
+            "metadata": {
+                "description": "Business criticality of the application. Tier 1 is the highest criticality"
+            }
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "defaultDataLakeStorageAccountName": "[tolower(concat(parameters('customerPrefix'), uniqueString(resourceGroup().id), 'sa'))]",
+        "synapseWorkspaceName": "[tolower(concat(parameters('customerPrefix'),'-synapse-workspace'))]",
+        "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
+        "defaultDataLakeStorageAccountUrl": "[concat('https://', variables('defaultDataLakeStorageAccountName'), '.dfs.core.windows.net')]",
+        "defaultDataLakeStorageFilesystemName": "[tolower(concat(parameters('customerPrefix'),'datalakefs'))]",
+        "storageRoleUniqueId": "418e3d9d-03a4-4628-b549-f9fcbb109012"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('defaultDataLakeStorageAccountName')]",
+            "apiVersion": "2021-06-01",
+            "location": "[variables('location')]",
+            "tags": {
+                "owner": "[parameters('ownerTag')]",
+                "application": "[parameters('applicationTag')]",
+                "environment": "[parameters('environmentTag')]",
+                "criticality": "[parameters('criticalityTag')]",
+                "ansServiceCatalog": "true",
+                "displayName": "DatalakeStorageAccount"
+            },
+            "sku": {
+                "name": "[parameters('datalakeStorageAccountType')]"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "encryption": {
+                    "keySource": "Microsoft.Storage",
+                    "services": {
+                        "blob": {
+                            "enabled": true
+                        },
+                        "file": {
+                            "enabled": true
+                        }
+                    }
+                },
+                "isHnsEnabled": true,
+                "supportsHttpsTrafficOnly": true
+            }
+        },
+        {
+            "apiVersion": "2021-03-01",
+            "name": "[variables('synapseWorkspaceName')]",
+            "location": "[variables('location')]",
+            "type": "Microsoft.Synapse/workspaces",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Storage/storageAccounts/', variables('defaultDataLakeStorageAccountName'))]",
+                "[concat('Microsoft.Resources/deployments/', variables('defaultDataLakeStorageFilesystemName'))]"
+            ],
+            "properties": {
+                "defaultDataLakeStorage": {
+                    "accountUrl": "[variables('defaultDataLakeStorageAccountUrl')]",
+                    "filesystem": "[variables('defaultDataLakeStorageFilesystemName')]"
+                },
+                "managedVirtualNetwork": "default",
+                "managedResourceGroupName": "[concat('managed-', resourceGroup().name)]",
+                "managedVirtualNetworkSettings": {
+                    "value": {
+                        "allowedAadTenantIdsForLinking": [],
+                        "preventDataExfiltration": false
+                    }
+                },
+                "sqlAdministratorLogin": "[parameters('sqlAdministratorLogin')]",
+                "sqlAdministratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]"
+            },
+            "resources": [
+                {
+                    "apiVersion": "2021-03-01",
+                    "dependsOn": [
+                        "[concat('Microsoft.Synapse/workspaces/', variables('synapseWorkspaceName'))]"
+                    ],
+                    "location": "[variables('location')]",
+                    "name": "allowAll",
+                    "properties": {
+                        "startIpAddress": "0.0.0.0",
+                        "endIpAddress": "255.255.255.255"
+                    },
+                    "type": "firewallrules"
+                },
+                {
+                    "apiVersion": "2021-03-01",
+                    "dependsOn": [
+                        "[concat('Microsoft.Synapse/workspaces/', variables('synapseWorkspaceName'))]"
+                    ],
+                    "location": "[variables('location')]",
+                    "name": "default",
+                    "properties": {
+                        "grantSqlControlToManagedIdentity": {
+                            "desiredState": "Enabled"
+                        }
+                    },
+                    "type": "managedIdentitySqlControlSettings"
+                }
+            ],
+            "tags": {
+                "owner": "[parameters('ownerTag')]",
+                "application": "[parameters('applicationTag')]",
+                "environment": "[parameters('environmentTag')]",
+                "criticality": "[parameters('criticalityTag')]",
+                "displayName": "SynapseWorkspace",
+                "ansServiceCatalog": "true"
+            }
+        },
+        {
+            "apiVersion": "2019-05-01",
+            "name": "StorageRoleDeploymentResource",
+            "type": "Microsoft.Resources/deployments",
+            "subscriptionId": "[subscription().subscriptionId]",
+            "resourceGroup": "[resourceGroup().name]",
+            "dependsOn": [
+                "[concat('Microsoft.Synapse/workspaces/', variables('synapseWorkspaceName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Storage/storageAccounts/providers/roleAssignments",
+                            "apiVersion": "2018-09-01-preview",
+                            "name": "[concat(variables('defaultDataLakeStorageAccountName'), '/Microsoft.Authorization/',  guid(concat(resourceGroup().id, '/', variables('storageBlobDataContributorRoleID'), '/', variables('synapseWorkspaceName'), '/', variables('storageRoleUniqueId'))))]",
+                            "location": "[variables('location')]",
+                            "properties": {
+                                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('storageBlobDataContributorRoleID'))]",
+                                "principalId": "[reference(concat('Microsoft.Synapse/workspaces/', variables('synapseWorkspaceName')), '2021-03-01', 'Full').identity.principalId]",
+                                "principalType": "ServicePrincipal"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "apiVersion": "2019-05-01",
+            "name": "[variables('defaultDataLakeStorageFilesystemName')]",
+            "type": "Microsoft.Resources/deployments",
+            "subscriptionId": "[subscription().subscriptionId]",
+            "resourceGroup": "[resourceGroup().name]",
+            "dependsOn": [
+                "[concat('Microsoft.Storage/storageAccounts/', variables('defaultDataLakeStorageAccountName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+                            "name": "[concat(variables('defaultDataLakeStorageAccountName'), '/default/', variables('defaultDataLakeStorageFilesystemName'))]",
+                            "apiVersion": "2018-02-01",
+                            "properties": {
+                                "publicAccess": "None"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "storageAccountName": {
+            "type": "string",
+            "value": "[variables('defaultDataLakeStorageAccountName')]"
+        },
+        "storageAccountConnectionString": {
+            "type": "string",
+            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('defaultDataLakeStorageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('defaultDataLakeStorageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]"
+        },
+        "synapseWorkspaceName": {
+            "type": "string",
+            "value": "[variables('synapseWorkspaceName')]"
+        }
+    }
+}
