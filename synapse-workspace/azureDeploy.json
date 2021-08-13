@@ -86,7 +86,8 @@
                 "environment": "[parameters('environmentTag')]",
                 "criticality": "[parameters('criticalityTag')]",
                 "ansServiceCatalog": "true",
-                "displayName": "DatalakeStorageAccount"
+                "displayName": "DatalakeStorageAccount",
+                "ansServiceCatalog": "true"
             },
             "sku": {
                 "name": "[parameters('datalakeStorageAccountType')]"

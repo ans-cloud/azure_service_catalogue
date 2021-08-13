@@ -24,6 +24,9 @@
       "apiVersion": "2020-08-01",
       "name": "[parameters('workspaceName')]",
       "location": "[parameters('location')]",
+      "tags": {
+        "ansServiceCatalog": "true"
+      },
       "properties": {
         "retentionInDays": 7,
         "sku": {
