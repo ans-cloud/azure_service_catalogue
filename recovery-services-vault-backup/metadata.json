@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Recovery-Services-Vaults.svg",
+  "itemDisplayName": "Recovery Services Vault and Backup Policy",
+  "description": "This template creates a Recovery Services Vault and a Daily Backup Policy. You can use this vault to backup your ARM based Azure Virtual Machines.",
+  "summary": "This template creates a Recovery Services Vault and a Daily Backup Policy. You can use this vault to backup your ARM based Azure Virtual Machines.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-11-19"
+}

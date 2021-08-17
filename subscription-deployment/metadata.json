@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Subscriptions.svg",
+  "itemDisplayName": "Subscription deployment",
+  "description": "This template will create a new Azure Subscription.",
+  "summary": "This template will create a new Azure Subscription.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2020-10-19"
+}

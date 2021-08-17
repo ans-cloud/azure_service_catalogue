@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Updates.svg",
+  "itemDisplayName": "Azure Update Management",
+  "description": "This template will create a new Azure automation account and configure Azure Update Management.",
+  "summary": "This template will create a new Azure automation account and configure Azure Update Management.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-01-21"
+}

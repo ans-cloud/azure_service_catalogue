@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "DDoS-Protection-Plans.svg",
+  "itemDisplayName": "DDoS Protection Plan",
+  "description": "This template will create an Azure DDoS Protection Plan.",
+  "summary": "This template will create an Azure DDoS Protection Plan.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-12-13"
+}

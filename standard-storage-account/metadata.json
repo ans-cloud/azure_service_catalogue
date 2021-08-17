@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Storage-Accounts.svg",
+  "itemDisplayName": "Standard Storage Account",
+  "description": "This template will build a General Purpose V2 Storage Account with specified replication and performance settings. You will also specify tag values for the storage account owner, environment, associated application and business criticality.",
+  "summary": "This template will build a General Purpose V2 Storage Account with specified replication and performance settings.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-01-22"
+}

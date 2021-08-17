@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Batch-Accounts.svg",
+  "itemDisplayName": "Batch Account with Storage",
+  "description": "This template creates Azure Batch account and Storage Account resources.",
+  "summary": "This template creates Azure Batch account and Storage Account resources.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-11-19"
+}

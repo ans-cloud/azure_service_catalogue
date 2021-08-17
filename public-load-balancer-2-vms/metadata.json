@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Load-Balancers.svg",
+  "itemDisplayName": "Public Loadbalancer with 2 VM's",
+  "description": "This template will create 2 Virtual Machines under a Load balancer and configure a load balancing rule on Port 80. This template also deploys a Storage Account, Virtual Network, Public IP address, Availability Set and Network Interfaces.",
+  "summary": "This template will create 2 Virtual Machines under a Load balancer and configure a load balancing rule on Port 80. This template also deploys a Storage Account, Virtual Network, Public IP address, Availability Set and Network Interfaces.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-12-14"
+}

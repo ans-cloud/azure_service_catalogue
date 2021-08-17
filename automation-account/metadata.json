@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Automation-Accounts.svg",
+  "itemDisplayName": "Automation Account",
+  "description": "This template will create an Azure Automation Account",
+  "summary": "This template will create an Azure Automation Account",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-12-13"
+}

@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "VM-Scale-Sets.svg",
+  "itemDisplayName": "Windows Virtual Machine Scale-Set",
+  "description": "This template will build a Windows Virtual Machine ScaleSet with the version of Windows OS you select. It will also build an accompanying Azure Load Balancer and load balancer rules to allow access to port 80 on the ScaleSet instances.",
+  "summary": "This template will build a Windows Virtual Machine ScaleSet with the version of Windows OS you select. It will also build an accompanying Azure Load Balancer and load balancer rules to allow access to port 80 on the ScaleSet instances.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-11-30"
+}
