@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Cache-Redis.svg",
+  "itemDisplayName": "Redis Cache",
+  "description": "This template will create a redis cache with diagnostic settings enabled and a storage account.",
+  "summary": "This template will create a redis cache with diagnostic settings enabled and a storage account.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-11-27"
+}

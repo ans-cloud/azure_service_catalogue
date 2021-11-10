@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Azure-Synapse-Analytics.svg",
+  "itemDisplayName": "Synapse Analytics Workspace",
+  "description": "This template will create a Synapse Analytics Workspace.",
+  "summary": "This template will create a Synapse Analytics Workspace.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-08-05"
+}

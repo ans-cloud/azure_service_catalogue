@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Virtual-Machine.svg",
+  "itemDisplayName": "Basic Web Application",
+  "description": "This template configures a simple web application consisting of an Azure Web App with 3 deployments slots and a connection to an Azure SQL Database. A storage account is also configured for application diagnostic logs and tags are applied to specify the application owner, environment and business criticality.",
+  "summary": "This template configures a simple web application.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-01-06"
+}

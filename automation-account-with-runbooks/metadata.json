@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Automation-Accounts.svg",
+  "itemDisplayName": "Automation Account with runbooks",
+  "description": "This template will create an Azure Automation Account with the following runbooks StartAzureV2Vm and StopAzureV2Vm runbooks. The runbooks can be used to stop and start Virtual Machines on a schedule.",
+  "summary": "This template will create an Azure Automation Account with the following runbooks StartAzureV2Vm and StopAzureV2Vm runbooks",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-01-06"
+}

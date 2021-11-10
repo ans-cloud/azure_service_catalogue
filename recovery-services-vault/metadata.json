@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Recovery-Services-Vaults.svg",
+  "itemDisplayName": "Recovery Services Vault",
+  "description": "This template creates a Recovery Services Vault which will be further used for Backup and SiteRecovery.",
+  "summary": "This template creates a Recovery Services Vault which will be further used for Backup and SiteRecovery.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-11-19"
+}

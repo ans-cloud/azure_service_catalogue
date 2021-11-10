@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Azure-Cosmos-DB.svg",
+  "itemDisplayName": "CosmosDB",
+  "description": "This template will create and Azure Cosmos DB.",
+  "summary": "This template will create and Azure Cosmos DB.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-11-19"
+}

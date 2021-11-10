@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Data-Lake-Storage-Gen2.svg",
+  "itemDisplayName": "Data Lake Gen2 Storage Account",
+  "description": "This template will create an Azure Storage Account with hierarchical namespace enabled.",
+  "summary": "This template will create an Azure Storage Account with hierarchical namespace enabled, to enable it to be used as a Data Lake Gen2.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-08-05"
+}

@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Log-Analytics-Workspaces.svg",
+  "itemDisplayName": "Log Analytics Workspace with Solutions",
+  "description": "This template will create a new Log Analytics workspace with pre-configured solutions for updates, anti malware and SQL Assessements. It will also create a storage account datasources for Windows Event Logs and IIS Logs.",
+  "summary": "This template will create a new Log Analytics workspace with pre-configured solutions for updates, anti malware and SQL Assessements.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-12-14"
+}

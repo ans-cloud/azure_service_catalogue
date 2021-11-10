@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Storage-Container.svg",
+  "itemDisplayName": "Standard Storage Account with Blob Container",
+  "description": "This template will create an Azure General Purpose v2 Storage Account, with specified replication settings and a Blob Container configured for private access.",
+  "summary": "This template will create an Azure General Purpose v2 Storage Account, with specified replication settings and a Blob Container configured for private access.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-01-22"
+}

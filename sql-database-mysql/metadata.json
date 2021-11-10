@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Azure-Database-MySQL-Server.svg",
+  "itemDisplayName": "MySQL Database",
+  "description": "This template will create and Azure SQL Database for MySQL.",
+  "summary": "This template will create and Azure SQL Database for MySQL.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-11-19"
+}

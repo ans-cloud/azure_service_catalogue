@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Traffic-Manager-Profiles.svg",
+  "itemDisplayName": "Traffic Manager with Virtual Machines",
+  "description": "This template will create an Azure Traffic Manager profile to load-balance across Azure virtual machines. Each endpoint has an equal weight but different weights can be specified to distribute load non-uniformly.",
+  "summary": "This template will create an Azure Traffic Manager profile to load-balance across Azure virtual machines.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-01-21"
+}

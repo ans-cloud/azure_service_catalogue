@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Batch-Accounts.svg",
+  "itemDisplayName": "Batch Account with Pools",
+  "description": "This template creates an Azure Batch account, Storage Account resources and a Batch Pool using a Windows image selected from the Azure Marketplace. The nodes within the pool will be configured with Automatic Updates enabled.",
+  "summary": "This template creates an Azure Batch account, Storage Account resources and a Batch Pool using a Windows image selected from the Azure Marketplace.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-01-22"
+}

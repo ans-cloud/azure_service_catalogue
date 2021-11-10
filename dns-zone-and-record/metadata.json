@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "DNS-Zones.svg",
+  "itemDisplayName": "DNS Zone and Record",
+  "description": "This template will create a new DNS zone and a A record using Azure DNS.",
+  "summary": "This template will create a new DNS zone and a A record using Azure DNS.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-11-19"
+}

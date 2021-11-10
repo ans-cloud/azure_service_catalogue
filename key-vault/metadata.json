@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Key-Vaults.svg",
+  "itemDisplayName": "Key Vault",
+  "description": "This template will create an Azure Key Vault.",
+  "summary": "This template will create an Azure Key Vault.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-11-19"
+}

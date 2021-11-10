@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Service-Health.svg",
+  "itemDisplayName": "Service Health",
+  "description": "This template will create an Azure Service Health Alert and an Action Group. The service health alert will notify a specified email address of any Azure Service Issues.",
+  "summary": "This template will create an Azure Service Health Alert and an Action Group.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-08-13"
+}

@@ -8,6 +8,6 @@
 </a>
 
 
-This template will create a new Azure automation account and configure Azure Update Management
+This template will create a new Azure automation account and configure Azure Update Management.
 
 

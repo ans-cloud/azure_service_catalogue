@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Virtual-Networks.svg",
+  "itemDisplayName": "Virtual Network and Subnet with DDoS Standard",
+  "description": "This template will deploy an Azure Virtual Network with a subnet and enable DDoS Standard Protection",
+  "summary": "This template will deploy an Azure Virtual Network with a subnet and enable DDoS Standard Protection",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-12-14"
+}

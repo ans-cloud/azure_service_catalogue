@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Azure-Sentinel.svg",
+  "itemDisplayName": "sentinel",
+  "description": "This template will deploy Azure Sentinel.",
+  "summary": "This template will deploy Azure Sentinel.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-08-13"
+}

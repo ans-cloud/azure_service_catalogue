@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Log-Analytics-Workspaces.svg",
+  "itemDisplayName": "Log Analytics Workspace",
+  "description": "This template will create a new Log Analytics workspace.",
+  "summary": "This template will create a new Log Analytics workspace.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-11-19"
+}

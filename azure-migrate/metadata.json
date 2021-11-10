@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Azure-Migrate.svg",
+  "itemDisplayName": "Azure Migrate",
+  "description": "This template will create an Azure Migration Project.",
+  "summary": "This template will create an Azure Migration Project.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-12-13"
+}

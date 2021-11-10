@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "CDN-Profiles.svg",
+  "itemDisplayName": "CDN with custom origin",
+  "description": "This template creates a CDN Profile and a CDN Endpoint with a user specified origin and  most commonly used settings on CDN.",
+  "summary": "This template creates a CDN Profile and a CDN Endpoint.",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2018-12-14"
+}

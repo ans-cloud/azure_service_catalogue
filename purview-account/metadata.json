@@ -1,0 +1,9 @@
+{
+  "type": "ANSQuickStart",
+  "icon": "Purview-Account.svg",
+  "itemDisplayName": "Purview Account",
+  "description": "This template will create an Azure Purview Account.",
+  "summary": "This template will create an Azure Purview Account ",
+  "githubUsername": "ans-cloud",
+  "dateUpdated": "2021-08-05"
+}
