@@ -20,6 +20,17 @@
         "description": "Name for the Virtual Machine."
       }
     },
+    "vmLocation": {
+      "type": "string",
+      "defaultValue": "UK South",
+      "allowedValues": [
+        "UK South",
+        "UK West"
+      ],
+      "metadata": {
+        "description": "Location of the Virtual Machine."
+      }
+    },
     "dnsLabelPrefix": {
       "type": "string",
       "metadata": {
@@ -131,7 +142,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
       "apiVersion": "2016-01-01",
-      "location": "[variables('location')]",
+      "location": "[parameters('vmLocation')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
@@ -150,7 +161,7 @@
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
-      "location": "[variables('location')]",
+      "location": "[parameters('vmLocation')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
@@ -170,7 +181,7 @@
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
-      "location": "[variables('location')]",
+      "location": "[parameters('vmLocation')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
@@ -202,7 +213,7 @@
         "type": "Microsoft.Network/networkSecurityGroups",
         "apiVersion": "2017-03-01",
         "name": "[variables('nsgName')]",
-        "location": "[variables('location')]",
+        "location": "[parameters('vmLocation')]",
         "tags": {
             "owner": "[parameters('ownerTag')]",
             "application": "[parameters('applicationTag')]",
@@ -234,7 +245,7 @@
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[variables('nicName')]",
-      "location": "[variables('location')]",
+      "location": "[parameters('vmLocation')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
@@ -271,7 +282,7 @@
       "apiVersion": "2017-03-30",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('vmName')]",
-      "location": "[variables('location')]",
+      "location": "[parameters('vmLocation')]",
       "tags": {
         "owner": "[parameters('ownerTag')]",
         "application": "[parameters('applicationTag')]",
