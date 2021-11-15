@@ -31,12 +31,13 @@
         "description": "Location of the Virtual Machine."
       }
     },
-    "dnsLabelPrefix": {
+    /*"dnsLabelPrefix": {
       "type": "string",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       }
     },
+    */
     "windowsOSVersion": {
       "type": "string",
       "defaultValue": "2019-Datacenter",
@@ -60,6 +61,7 @@
             "description": "Select a VM Size: DS2_V2 - 2 vCPUs, 7 GiB RAM;  DS3_V2 - 4 vCPUs, 14 GiB RAM;  DS2_V4 - 4 vCPUs, 28 GiB RAM;   "
         }
     },
+    /* 
     "rdpAddressRange":{
         "type": "string",
         "defaultValue": "*",
@@ -67,6 +69,7 @@
             "description": "Select the vm size"
         } 
     },
+    */
     "monitor":{
         "type": "string",
         "defaultValue": "true",
@@ -78,7 +81,7 @@
             "description": "Name of the owner of the VM"
         }
     },
-   
+
     "SchedulePowerOn":{
         "type": "string",
         "defaultValue": "disabled",
@@ -131,10 +134,10 @@
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "[concat(parameters('vmName'), '-subnet')]",
     "subnetPrefix": "10.0.0.0/24",
-    "publicIPAddressName": "[concat(parameters('vmName'), '-pip')]",
+    // "publicIPAddressName": "[concat(parameters('vmName'), '-pip')]",
     "virtualNetworkName": "[concat(parameters('vmName'), '-vnet')]",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-    "dnsLabel": "[toLower(concat(parameters('dnsLabelPrefix'),uniqueString(subscription().subscriptionId)))]",
+    // "dnsLabel": "[toLower(concat(parameters('dnsLabelPrefix'),uniqueString(subscription().subscriptionId)))]",
     "nsgName": "[concat(parameters('vmName'), '-nsg')]"
   },
   "resources": [
@@ -157,7 +160,7 @@
       "kind": "Storage",
       "properties": {}
     },
-    {
+    /* {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
@@ -176,7 +179,7 @@
           "domainNameLabel": "[variables('dnsLabel')]"
         }
       }
-    },
+    }, */
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/virtualNetworks",
@@ -221,13 +224,13 @@
             "criticality": "[parameters('criticalityTag')]",
             "ansServiceCatalog" : "true",
             "monitor": "[parameters('monitor')]"
-        },
-        "properties": {
+        }
+        /* "properties": {
             "securityRules": [
                 {
                     "name": "RDP",
                     "properties": {
-                        "access": "Allow",
+                        "access": "Deny",
                         "description": "Inbound RDP rule",
                         "direction": "Inbound",
                         "destinationAddressPrefix": "*",
@@ -235,11 +238,11 @@
                         "destinationPortRange": 3389,
                         "sourcePortRange": "*",
                         "priority": 500,
-                        "sourceAddressPrefix": "[parameters('rdpAddressRange')]"
+                        "sourceAddressPrefix": "*"
                     }
                 }
             ]
-        }
+        }*/
     },
     {
       "apiVersion": "2016-03-30",
@@ -255,7 +258,7 @@
         "monitor": "[parameters('monitor')]"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+        // "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
       "properties": {
@@ -264,9 +267,9 @@
             "name": "ipconfig1",
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
-              "publicIPAddress": {
+              /* "publicIPAddress": {
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
-              },
+              }, */
               "subnet": {
                 "id": "[variables('subnetRef')]"
               }
@@ -342,9 +345,9 @@
     }
   ],
   "outputs": {
-    "hostname": {
+    /* "hostname": {
       "type": "string",
       "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
-    }
+    }*/
   }
 }
