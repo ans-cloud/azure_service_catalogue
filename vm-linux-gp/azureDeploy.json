@@ -40,9 +40,9 @@
     */
     "ubuntuOSVersion": {
       "type": "string",
-      "defaultValue": "20.04-LTS",
+      "defaultValue": "20_04-lts",
       "allowedValues": [
-        "20.04-LTS",
+        "20_04-lts",
         "18.04-LTS"
       ],
       "metadata": {
@@ -131,7 +131,7 @@
     "storageAccountName": "[toLower(concat(parameters('vmName') , uniquestring(resourceGroup().id)))]",
     "nicName": "[concat(parameters('vmName'), '-nic')]",
     "imagePublisher": "Canonical",
-    "imageOffer": "UbuntuServer",
+    "imageOffer": "0001-com-ubuntu-server-focal",
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "[concat(parameters('vmName'), '-subnet')]",
     "subnetPrefix": "10.0.0.0/24",
