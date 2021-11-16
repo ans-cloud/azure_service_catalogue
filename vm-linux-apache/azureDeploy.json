@@ -1,0 +1,370 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the Virtual Machine."
+      }
+    },
+    "vmLocation": {
+      "type": "string",
+      "defaultValue": "UK South",
+      "allowedValues": [
+        "UK South",
+        "UK West"
+      ],
+      "metadata": {
+        "description": "Location of the Virtual Machine."
+      }
+    },
+    "dnsLabelPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+      }
+    },
+  
+    "ubuntuOSVersion": {
+      "type": "string",
+      "defaultValue": "20_04-lts",
+      "allowedValues": [
+        "20_04-lts",
+        "18.04-LTS"
+      ],
+      "metadata": {
+        "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+      }
+    },
+    "vmSize": {
+        "type": "string",
+        "defaultValue": "Standard_DS2_v2",
+        "allowedValues": [
+        "Standard_DS2_v2",
+        "Standard_DS3_v2",
+        "Standard_DS4_v2"
+      ],
+        "metadata": {
+            "description": "Select a VM Size: DS2_V2 - 2 vCPUs, 7 GiB RAM;  DS3_V2 - 4 vCPUs, 14 GiB RAM;  DS2_V4 - 4 vCPUs, 28 GiB RAM;   "
+        }
+    }, 
+    "rdpAddressRange":{
+        "type": "string",
+        "defaultValue": "*",
+        "metadata": {
+            "description": "Select the vm size"
+        } 
+    },
+    "monitor":{
+        "type": "string",
+        "defaultValue": "true",
+        "allowedValues": [
+          "true",
+          "false"
+        ],
+        "metadata": {
+            "description": "Name of the owner of the VM"
+        }
+    },
+
+    "SchedulePowerOn":{
+        "type": "string",
+        "defaultValue": "disabled",
+        "metadata": {
+            "description": "If running on a schedule enter the time to power on a virtual machine in the format 00:00"
+        }
+    },
+    "SchedulePowerOff":{
+        "type": "string",
+        "defaultValue": "disabled",
+        "metadata": {
+            "description": "If running on a schedule enter the time to power off a virtual machine in the format 00:00"
+        }
+    },
+    "ownerTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Name of the owner of the VM"
+        }
+    },
+    "applicationTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Application the VM belongs to"
+        }
+    },
+    "environmentTag":{
+        "type": "string",
+        "metadata": {
+            "description": "Environment the VM belongs to. E.g. Dev, Test, Prod"
+        }
+    },
+    "criticalityTag":{
+        "type": "string",
+        "allowedValues": [
+            "Tier 1",
+            "Tier 2",
+            "Tier 3",
+            "Tier 4"
+        ],
+        "metadata": {
+            "description": "Business criticality of the application. Tier 1 is the highest criticality"
+        }
+    }
+  },
+  "variables": {
+    "storageAccountName": "[toLower(concat(parameters('vmName') , uniquestring(resourceGroup().id)))]",
+    "nicName": "[concat(parameters('vmName'), '-nic')]",
+    "imagePublisher": "Canonical",
+    "imageOffer": "0001-com-ubuntu-server-focal",
+    "addressPrefix": "10.0.0.0/16",
+    "subnetName": "[concat(parameters('vmName'), '-subnet')]",
+    "subnetPrefix": "10.0.0.0/24",
+    "publicIPAddressName": "[concat(parameters('vmName'), '-pip')]",
+    "virtualNetworkName": "[concat(parameters('vmName'), '-vnet')]",
+    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
+    "dnsLabel": "[toLower(concat(parameters('dnsLabelPrefix'),uniqueString(subscription().subscriptionId)))]",
+    "nsgName": "[concat(parameters('vmName'), '-nsg')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('storageAccountName')]",
+      "apiVersion": "2016-01-01",
+      "location": "[parameters('vmLocation')]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog" : "true",
+        "monitor": "[parameters('monitor')]"
+      },
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "Storage",
+      "properties": {}
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[parameters('vmLocation')]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog" : "true",
+        "monitor": "[parameters('monitor')]"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[variables('dnsLabel')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('virtualNetworkName')]",
+      "location": "[parameters('vmLocation')]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog" : "true",
+        "monitor": "[parameters('monitor')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
+      ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('addressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('subnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "apiVersion": "2017-03-01",
+        "name": "[variables('nsgName')]",
+        "location": "[parameters('vmLocation')]",
+        "tags": {
+            "owner": "[parameters('ownerTag')]",
+            "application": "[parameters('applicationTag')]",
+            "environment": "[parameters('environmentTag')]",
+            "criticality": "[parameters('criticalityTag')]",
+            "ansServiceCatalog" : "true",
+            "monitor": "[parameters('monitor')]"
+        },
+         "properties": {
+            "securityRules": [
+                {
+                    "name": "RDP",
+                    "properties": {
+                        "access": "Deny",
+                        "description": "Inbound RDP rule",
+                        "direction": "Inbound",
+                        "destinationAddressPrefix": "*",
+                        "protocol": "Tcp",
+                        "destinationPortRange": 3389,
+                        "sourcePortRange": "*",
+                        "priority": 500,
+                        "sourceAddressPrefix": "[parameters('rdpAddressRange')]"
+                    }
+                }
+            ]
+        }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName')]",
+      "location": "[parameters('vmLocation')]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog" : "true",
+        "monitor": "[parameters('monitor')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+              },
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ],
+        "networkSecurityGroup": {
+            "id": "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('vmName')]",
+      "location": "[parameters('vmLocation')]",
+      "tags": {
+        "owner": "[parameters('ownerTag')]",
+        "application": "[parameters('applicationTag')]",
+        "environment": "[parameters('environmentTag')]",
+        "criticality": "[parameters('criticalityTag')]",
+        "ansServiceCatalog" : "true",
+        "monitor": "[parameters('monitor')]",
+        "AutoOn": "[parameters('SchedulePowerOn')]",
+        "AutoOff": "[parameters('SchedulePowerOff')]"
+        
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[parameters('vmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('imagePublisher')]",
+            "offer": "[variables('imageOffer')]",
+            "sku": "[parameters('ubuntuOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "diskSizeGB": 1023,
+              "lun": 0,
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))).primaryEndpoints.blob]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('vmName'), '/installcustomscript')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[parameters('vmLocation')]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "commandToExecute": "sudo bash -c 'apt-get update && apt-get -y install apache2' "
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "hostname": {
+      "type": "string",
+      "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
+    }
+  }
+}
