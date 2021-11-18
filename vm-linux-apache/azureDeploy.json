@@ -239,6 +239,34 @@
                         "priority": 500,
                         "sourceAddressPrefix": "[parameters('rdpAddressRange')]"
                     }
+                },
+                {
+                        "name": "HTTP",
+                        "properties": {
+                        "access": "Allow",
+                        "description": "Inbound HTTP rule",
+                        "direction": "Inbound",
+                        "destinationAddressPrefix": "*",
+                        "protocol": "Tcp",
+                        "destinationPortRange": 80,
+                        "sourcePortRange": "*",
+                        "priority": 510,
+                        "sourceAddressPrefix": "*"
+                        }
+                },
+                {
+                        "name": "HTTPS",
+                        "properties": {
+                        "access": "Allow",
+                        "description": "Inbound HTTP rule",
+                        "direction": "Inbound",
+                        "destinationAddressPrefix": "*",
+                        "protocol": "Tcp",
+                        "destinationPortRange": 443,
+                        "sourcePortRange": "*",
+                        "priority": 520,
+                        "sourceAddressPrefix": "*"
+                        }
                 }
             ]
         }

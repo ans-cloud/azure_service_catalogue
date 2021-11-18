@@ -7,4 +7,4 @@
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-This template allows you to deploy a General Purpose Linux VM
+This template allows you to deploy a General Purpose Linux VM with Apache installed and ports 80 & 443 open
