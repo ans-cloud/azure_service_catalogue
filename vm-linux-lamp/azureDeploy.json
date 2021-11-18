@@ -364,7 +364,7 @@
         "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
-          "commandToExecute": "sudo bash -c 'apt-get update && apt-get -y install lamp-server^' "
+          "commandToExecute": "sudo bash -c 'apt-get update && apt-get -y install apache2 mysql-server php libapache2-mod-php' "
         }
       }
     }
