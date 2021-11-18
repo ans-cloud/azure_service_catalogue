@@ -31,12 +31,13 @@
         "description": "Location of the Virtual Machine."
       }
     },
-    "dnsLabelPrefix": {
+    /*"dnsLabelPrefix": {
       "type": "string",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       }
     },
+    */
   
     "ubuntuOSVersion": {
       "type": "string",
@@ -61,13 +62,6 @@
             "description": "Select a VM Size: DS2_V2 - 2 vCPUs, 7 GiB RAM;  DS3_V2 - 4 vCPUs, 14 GiB RAM;  DS2_V4 - 4 vCPUs, 28 GiB RAM;   "
         }
     }, 
-    "rdpAddressRange":{
-        "type": "string",
-        "defaultValue": "*",
-        "metadata": {
-            "description": "Select the vm size"
-        } 
-    },
     "monitor":{
         "type": "string",
         "defaultValue": "true",
@@ -136,7 +130,7 @@
     "publicIPAddressName": "[concat(parameters('vmName'), '-pip')]",
     "virtualNetworkName": "[concat(parameters('vmName'), '-vnet')]",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-    "dnsLabel": "[toLower(concat(parameters('dnsLabelPrefix'),uniqueString(subscription().subscriptionId)))]",
+    "dnsLabel": "[toLower(concat(parameters('vmName'),uniqueString(subscription().subscriptionId)))]",
     "nsgName": "[concat(parameters('vmName'), '-nsg')]"
   },
   "resources": [
@@ -226,20 +220,6 @@
         },
          "properties": {
             "securityRules": [
-                {
-                    "name": "RDP",
-                    "properties": {
-                        "access": "Deny",
-                        "description": "Inbound RDP rule",
-                        "direction": "Inbound",
-                        "destinationAddressPrefix": "*",
-                        "protocol": "Tcp",
-                        "destinationPortRange": 3389,
-                        "sourcePortRange": "*",
-                        "priority": 500,
-                        "sourceAddressPrefix": "[parameters('rdpAddressRange')]"
-                    }
-                },
                 {
                         "name": "HTTP",
                         "properties": {
