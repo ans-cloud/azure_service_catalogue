@@ -15,7 +15,8 @@
             "defaultValue": "UK South",
             "allowedValues": [
                 "UK South",
-                "UK West"
+                "UK West",
+                "West Europe"
             ],
             "metadata": {
                 "description": "description"
