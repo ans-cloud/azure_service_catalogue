@@ -5,7 +5,7 @@
     "batchAccountName": {
       "type": "string",
       "metadata": {
-        "description": "Batch Account Name"
+        "description": "Batch Account Name. This must be unique"
       }
     },
     "poolID": {
@@ -32,7 +32,7 @@
     },
     "vmSize":{
       "type": "string",
-      "defaultValue": "Standard_A1",
+      "defaultValue": "Standard_D2_v2",
       "allowedValues": [
 	      "Standard_D2_v2",
 	      "Standard_D3_v2",
@@ -41,14 +41,26 @@
     },
     "dedicatedNodes": {
       "type": "string",
+      "defaultValue": "1",
+      "allowedValues": [
+        "1",
+        "2",
+        "3"
+      ],
       "metadata": {
-        "description": "number of dedicated nodes"
+        "description": "number of dedicated nodes up to a maximunm of 3"
       }
     },
     "lowPriorityNodes": {
       "type": "string",
+       "defaultValue": "1",
+      "allowedValues": [
+        "1",
+        "2",
+        "3"
+      ],
       "metadata": {
-        "description": "number of low priority nodes"
+        "description": "number of low priority nodes up to a maximunm of 3"
       }
     },
     "monitored": {
