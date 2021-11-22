@@ -17,17 +17,6 @@
                 "UK West"
             ]
         },
-        "purviewCapactity": {
-            "defaultValue": 4,
-            "type": "int",
-            "allowedValues": [
-                4,
-                16
-            ],
-            "metadata": {
-                "description": "Purview Capacity"
-            }
-        },
         "ownerTag": {
             "type": "string",
             "metadata": {
@@ -64,7 +53,8 @@
     },
     "variables": {
         "location": "[parameters('purviewLocation')]",
-        "managedResourceGroupName": "[concat('managed-', resourceGroup().name)]"
+        "managedResourceGroupName": "[concat('managed-', resourceGroup().name)]",
+        "purviewCapacity": "4"
     },
     "resources": [
         {
@@ -81,7 +71,7 @@
             },
             "sku": {
                 "name": "Standard",
-                "capacity": "[parameters('purviewCapactity')]"
+                "capacity": "[variables('purviewCapacity')]"
             },
             "dependsOn": [],
             "tags": {
