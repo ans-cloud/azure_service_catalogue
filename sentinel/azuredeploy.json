@@ -7,7 +7,10 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "[resourceGroup().location]"
+      "defaultValue": "UK South",
+      "allowedValues": [
+        "UK South"
+      ]
     }
   },
   "functions": [],
