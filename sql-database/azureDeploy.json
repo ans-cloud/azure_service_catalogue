@@ -23,14 +23,6 @@
     "administratorLoginPassword": {
       "type": "securestring"
     },
-    "edition": {
-      "type": "string",
-      "defaultValue": "Standard",
-      "allowedValues": [
-        "Standard",
-        "Premium"
-      ]
-    },
     "requestedServiceObjectiveName": {
       "type": "string",
       "defaultValue": "S0",
@@ -90,7 +82,8 @@
     "sqlserverName": "[toLower(concat(parameters('databaseName'), '-srv'))]",
     "location": "[parameters('databaseLocation')]",
     "collation": "SQL_Latin1_General_CP1_CI_AS",
-    "maxSizeBytes": "1073741824"
+    "maxSizeBytes": "1073741824",
+    "edition": "Standard"
   },
   "resources": [
     {
@@ -128,7 +121,7 @@
             "[concat('Microsoft.Sql/servers/', variables('sqlserverName'))]"
           ],
           "properties": {
-            "edition": "[parameters('edition')]",
+            "edition": "[variables('edition')]",
             "collation": "[variables('collation')]",
             "maxSizeBytes": "[variables('maxSizeBytes')]",
             "requestedServiceObjectiveName": "[parameters('requestedServiceObjectiveName')]"
