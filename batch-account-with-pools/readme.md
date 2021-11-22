@@ -9,4 +9,4 @@
 
 Use Azure Batch to run large-scale parallel and high-performance computing (HPC) batch jobs efficiently in Azure. Azure Batch creates and manages a pool of compute nodes (virtual machines), installs the applications you want to run, and schedules jobs to run on the nodes.
 
-This template creates an Azure Batch account, Storage Account resources and a Batch Pool using a Windows image selected from the Azure Marketplace. The nodes within the pool will be configured with Automatic Updates enabled.
+This template creates an Azure Batch account, Storage Account resources and a Batch Pool using either a Windows 2019 or 2016 image selected from the Azure Marketplace. The nodes within the pool will be configured with Automatic Updates enabled.
