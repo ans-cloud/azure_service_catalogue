@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "batchAccountName": {
@@ -14,37 +14,26 @@
         "description": "a string that uniquely identifies the pool within the batch account"
       }
     },
-    "poolDisplayName": {
-      "type": "string"
+    "poolLocation": {
+      "type": "string",
+      "defaultValue": "UK South",
+      "allowedValues": [
+        "UK South",
+        "UK West"
+      ]
     },
     "osType": {
       "type": "string",
-      "defaultValue": "2016-Datacenter",
+      "defaultValue": "2019-Datacenter",
       "allowedValues": [
-        "2008-R2-SP1",
-	      "2008-R2-SP1-smalldisk",
-	      "2012-Datacenter",
-	      "2012-Datacenter-smalldisk",
-	      "2012-R2-Datacenter",
-	      "2012-R2-Datacenter-smalldisk",
-	      "2016-Datacenter",
-        "2016-Datacenter-smalldisk",
-	      "2016-Datacenter-with-Containers"
+	      "2019-Datacenter",
+        "2016-Datacenter"
       ]
     },
     "vmSize":{
       "type": "string",
       "defaultValue": "Standard_A1",
       "allowedValues": [
-        "Standard_A1",
-        "Standard_A2",
-        "Standard_A3",
-        "Standard_A4",
-	      "Standard_D1_v2", 
-	      "Standard_D11_v2",
-	      "Standard_D12_v2",
-	      "Standard_D13_v2",
-	      "Standard_D14_v2",
 	      "Standard_D2_v2",
 	      "Standard_D3_v2",
 	      "Standard_D4_v2"
@@ -62,18 +51,13 @@
         "description": "number of low priority nodes"
       }
     },
-    "storageAccountSku": {
+    "monitored": {
       "type": "string",
-      "defaultValue": "Standard_LRS",
+      "defaultValue": "true",
       "allowedValues": [
-        "Standard_LRS",
-        "Standard_GRS",
-        "Standard_ZRS",
-        "Premium_LRS"
-      ],
-      "metadata": {
-        "description": "Storage Account type"
-      }
+        "true",
+        "false"
+      ]
     },
     "ownerTag": {
       "type": "string"
@@ -96,7 +80,9 @@
   },
   "variables": {
     "storageAccountName": "[concat(uniqueString(resourceGroup().id),'storage')]",
-    "location": "[resourceGroup().location]"
+    "location": "[parameters('poolLocation')]",
+    "poolDisplayName": "[parameters('poolID')]",
+    "storageAccountSku": "Standard_LRS"
   },
   "resources": [
     {
@@ -106,7 +92,7 @@
       "location": "[variables('location')]",
       "comments": "This storage account is used to associate to a batch account",
       "sku": {
-        "name": "[parameters('storageAccountsku')]"
+        "name": "[variables('storageAccountsku')]"
       },
       "kind": "Storage",
       "tags": {
@@ -115,7 +101,8 @@
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
-        "ansServiceCatalog": "true"
+        "ansServiceCatalog": "true",
+        "monitored": "[parameters('monitored')]"
       },
       "properties": {}
     },
@@ -147,7 +134,7 @@
       "apiVersion": "2017-09-01",
       "scale": null,
       "properties": {
-          "displayName": "[parameters('poolDisplayName')]",
+          "displayName": "[variables('poolDisplayName')]",
           "vmSize": "[parameters('vmSize')]",
           "interNodeCommunication": "Disabled",
           "maxTasksPerNode": 1,
