@@ -8,4 +8,4 @@
 </a>
 
 
-This template will create an Azure Purview Account 
+This template will create an Azure Purview Account with 1 Capacity Unit in a UK region. The purview account will be accessible via an Azure public endpoint

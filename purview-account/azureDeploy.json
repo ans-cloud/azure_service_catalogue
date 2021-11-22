@@ -9,6 +9,14 @@
                 "description": "Purview account name"
             }
         },
+        "purviewLocation":{
+            "type": "string",
+            "defaultValue": "UK South",
+            "allowedValues": [
+                "UK South",
+                "UK West"
+            ]
+        },
         "purviewCapactity": {
             "defaultValue": 4,
             "type": "int",
@@ -55,7 +63,7 @@
         }
     },
     "variables": {
-        "location": "[resourceGroup().location]",
+        "location": "[parameters('purviewLocation')]",
         "managedResourceGroupName": "[concat('managed-', resourceGroup().name)]"
     },
     "resources": [
