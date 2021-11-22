@@ -10,6 +10,17 @@
                 "description": "Prefix for the data lake storage account name, alphanumeric only"
             }
         },
+        "workspaceLocation": {
+            "type": "string",
+            "defaultValue": "UK South",
+            "allowedValues": [
+                "UK South",
+                "UK West"
+            ],
+            "metadata": {
+                "description": "description"
+            }
+        },
         "sqlAdministratorLogin": {
             "type": "string",
             "defaultValue": "sqladmin"
@@ -64,7 +75,7 @@
         }
     },
     "variables": {
-        "location": "[resourceGroup().location]",
+        "location": "[parameters('workspaceLocation')]",
         "defaultDataLakeStorageAccountName": "[tolower(concat(parameters('customerPrefix'), uniqueString(resourceGroup().id), 'sa'))]",
         "synapseWorkspaceName": "[tolower(concat(parameters('customerPrefix'),'-synapse-workspace'))]",
         "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
