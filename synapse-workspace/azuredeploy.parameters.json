@@ -5,9 +5,6 @@
     "customerPrefix": {
       "value": "ans"
     },
-    "storageAccountType": {
-      "value": "Standard_LRS"
-    },
     "sqlAdministratorLogin": {
       "value": "sqladmin"
     },

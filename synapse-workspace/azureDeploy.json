@@ -10,19 +10,6 @@
                 "description": "Prefix for the data lake storage account name, alphanumeric only"
             }
         },
-        "datalakeStorageAccountType": {
-            "type": "string",
-            "defaultValue": "Standard_LRS",
-            "allowedValues": [
-                "Standard_LRS",
-                "Standard_GRS",
-                "Standard_ZRS",
-                "Premium_LRS"
-            ],
-            "metadata": {
-                "description": "Storage Account type"
-            }
-        },
         "sqlAdministratorLogin": {
             "type": "string",
             "defaultValue": "sqladmin"
@@ -30,6 +17,17 @@
         "sqlAdministratorLoginPassword": {
             "type": "secureString",
             "defaultValue": ""
+        },
+        "monitored": {
+            "type": "string",
+            "defaultValue": "true",
+            "allowedValues": [
+                "true",
+                "false"
+            ],
+            "metadata": {
+                "description": "description"
+            }
         },
         "ownerTag": {
             "type": "string",
@@ -72,7 +70,8 @@
         "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
         "defaultDataLakeStorageAccountUrl": "[concat('https://', variables('defaultDataLakeStorageAccountName'), '.dfs.core.windows.net')]",
         "defaultDataLakeStorageFilesystemName": "[tolower(concat(parameters('customerPrefix'),'datalakefs'))]",
-        "storageRoleUniqueId": "418e3d9d-03a4-4628-b549-f9fcbb109012"
+        "storageRoleUniqueId": "418e3d9d-03a4-4628-b549-f9fcbb109012",
+        "datalakeStorageAccountType": "Standard_LRS"
     },
     "resources": [
         {
@@ -87,10 +86,10 @@
                 "criticality": "[parameters('criticalityTag')]",
                 "ansServiceCatalog": "true",
                 "displayName": "DatalakeStorageAccount",
-                "ansServiceCatalog": "true"
+                "monitored": "[parameters('monitored')]"
             },
             "sku": {
-                "name": "[parameters('datalakeStorageAccountType')]"
+                "name": "[variables('datalakeStorageAccountType')]"
             },
             "kind": "StorageV2",
             "properties": {
@@ -172,7 +171,8 @@
                 "environment": "[parameters('environmentTag')]",
                 "criticality": "[parameters('criticalityTag')]",
                 "displayName": "SynapseWorkspace",
-                "ansServiceCatalog": "true"
+                "ansServiceCatalog": "true",
+                "monitored": "[parameters('monitored')]"
             }
         },
         {
@@ -241,10 +241,6 @@
         "storageAccountName": {
             "type": "string",
             "value": "[variables('defaultDataLakeStorageAccountName')]"
-        },
-        "storageAccountConnectionString": {
-            "type": "string",
-            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('defaultDataLakeStorageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('defaultDataLakeStorageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]"
         },
         "synapseWorkspaceName": {
             "type": "string",
