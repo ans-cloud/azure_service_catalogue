@@ -10,8 +10,7 @@
       "defaultValue": "UK South",
       "allowedValues": [
         "UK South",
-        "UK West",
-        "West Europe"
+        "UK West"
       ],
       "metadata": {
         "description": "Which region should the database run from"
