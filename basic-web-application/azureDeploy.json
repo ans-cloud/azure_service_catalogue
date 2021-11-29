@@ -15,8 +15,7 @@
       "defaultValue": "UK South",
       "allowedValues": [
         "UK South",
-        "UK West",
-        "West Europe"
+        "UK West"
       ],
       "metadata": {
         "description": "select the location the resources will be deployed to"
