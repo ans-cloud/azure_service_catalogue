@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
       "storageAccountPrefix": {
@@ -21,6 +21,22 @@
         "metadata": {
           "description": "Storage Account type"
         }
+      },
+      "location": {
+        "type": "string",
+        "defaultValue": "UK South",
+        "allowedValues": [
+          "UK South",
+          "UK West"
+        ]
+      },
+      "monitored": {
+        "type": "string",
+        "defaultValue": "true",
+        "allowedValues": [
+          "true",
+          "false"
+        ]
       },
       "ownerTag":{
         "type": "string",
@@ -54,7 +70,7 @@
       }
     },
     "variables": {
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "storageAccountName": "[concat(parameters('storageAccountPrefix'), uniqueString(resourceGroup().id))]"
     },
     "resources": [
@@ -68,7 +84,8 @@
           "application": "[parameters('applicationTag')]",
           "environment": "[parameters('environmentTag')]",
           "criticality": "[parameters('criticalityTag')]",
-          "ansServiceCatalog": "true"
+          "ansServiceCatalog": "true",
+          "monitored": "[parameters('monitored')]"
         },
         "sku": {
           "name": "[parameters('storageAccountType')]"
