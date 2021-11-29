@@ -152,8 +152,8 @@
             "version": "latest"
         },
         "imageReference": "[variables('osType')]",
-        "powershelldscZipFullPath": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/blob/master/demos/vmss-windows-webapp-dsc-autoscale/DSC/InstallIIS.zip",
-        "webDeployPackageFullPath": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/blob/master/demos/vmss-windows-webapp-dsc-autoscale/WebDeploy/DefaultASPWebApp.v1.0.zip",
+        "powershelldscZipFullPath": "https://github.com/Azure/azure-quickstart-templates/blob/master/demos/vmss-windows-webapp-dsc-autoscale/DSC/InstallIIS.zip?raw=true",
+        "webDeployPackageFullPath": "https://github.com/Azure/azure-quickstart-templates/blob/master/demos/vmss-windows-webapp-dsc-autoscale/WebDeploy/DefaultASPWebApp.v1.0.zip?raw=true",
         "powershelldscUpdateTagVersion": "1.0"
     },
     "resources": [
