@@ -113,7 +113,7 @@
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
     "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/BackendPool1')]",
     "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
-    "storageAccountName": "[concat(variables('lbName'), 'data001')]",
+    "storageAccountName": "[toLower(concat(variables('lbName'), 'data001'))]",
     "dnsNameforLBIP": "[toLower(concat(variables('lbName'), '-LBIP'))]",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
@@ -121,7 +121,7 @@
     "publicIPAddressName": "[concat(variables('lbName'), '-pip')]",
     "nicNamePrefix": "[concat(parameters('vmNamePrefix'), '-nic')]",
     "vnetName": "[concat(parameters('vmNamePrefix'), '-vnet')]",
-    "lbName": "[concat(parameters('vmNamePrefix'), '-lb')]"
+    "lbName": "[concat(parameters('vmNamePrefix'), 'LB')]"
   },
   "resources": [
     {
