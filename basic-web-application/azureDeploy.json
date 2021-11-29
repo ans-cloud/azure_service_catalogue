@@ -1,27 +1,24 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "appName": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 15
-    },
-    "environment": {
-      "type": "string",
-      "allowedValues": [
-        "dev",
-        "test",
-        "prod",
-        "qa"
-      ]
-    },
-    "locationShort": {
-      "type": "string",
-      "minLength": 2,
-      "maxLength": 3,
+      "maxLength": 15,
       "metadata": {
-        "description": "Two to three character value that identifies the region into which the resources are deployed. Should map to the resource group's location."
+        "description": "must be globally unique"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "UK South",
+      "allowedValues": [
+        "UK South",
+        "UK West"
+      ],
+      "metadata": {
+        "description": "select the location the resources will be deployed to"
       }
     },
     "skuName": {
@@ -30,11 +27,7 @@
       "allowedValues": [
         "S1",
         "S2",
-        "S3",
-        "P1",
-        "P2",
-        "P3",
-        "P4"
+        "S3"
       ],
       "metadata": {
         "description": "Describes plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
@@ -43,8 +36,13 @@
     "skuCapacity": {
       "type": "string",
       "defaultValue": "1",
+      "allowedValues": [
+        "1",
+        "2",
+        "3"
+      ],
       "metadata": {
-        "description": "Describes plan's instance count"
+        "description": "Select up to 3 instances"
       }
     },
     "administratorLogin": {
@@ -62,28 +60,6 @@
     "databaseName": {
       "type": "string"
     },
-    "collation": {
-      "type": "string",
-      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
-    },
-    "edition": {
-      "type": "string",
-      "defaultValue": "Standard",
-      "allowedValues": [
-        "Standard",
-        "Premium"
-      ],
-      "metadata": {
-        "description": "SQL database edition. Check Details at https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers"
-      }
-    },
-    "maxSizeBytes": {
-      "type": "string",
-      "defaultValue": "1073741824",
-      "metadata": {
-        "description": "Maximum size of the database in bytes"
-      }
-    },
     "requestedServiceObjectiveName": {
       "type": "string",
       "defaultValue": "S0",
@@ -91,33 +67,25 @@
         "S0",
         "S1",
         "S2",
-        "P1",
-        "P2",
-        "P3"
+        "S3"
       ],
       "metadata": {
         "description": "Describes the performance level for Azure SQL Database Edition"
       }
     },
-    "storageAccountType": {
-      "type": "string",
-      "defaultValue": "Standard_LRS",
-      "allowedValues": [
-        "Standard_LRS",
-        "Standard_ZRS",
-        "Standard_GRS",
-        "Standard_RAGRS",
-        "Premium_LRS"
-      ],
-      "metadata": {
-        "description": "Storage Account Replication Type. See https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy"
-      }
-    },
-    "ownerTag":{
+  "monitored": {
+    "type": "string",
+    "defaultValue": "true",
+    "allowedValues": [
+      "true",
+      "false"
+    ]
+  },
+  "ownerTag":{
       "type": "string",
       "metadata": {
           "description": "Name of the owner of the VM"
-      }
+    }
   },
   "applicationTag":{
       "type": "string",
@@ -145,11 +113,15 @@
   }
  },
   "variables": {
-    "location": "[resourceGroup().location]",
-    "webSiteName": "[toLower(concat(parameters('appName'), '-', parameters('environment'), '-', parameters('locationShort'), '-web'))]",
-    "sqlserverName": "[toLower(concat(parameters('appName'), '-', parameters('environment'), '-', parameters('locationShort'), '-sql'))]",
-    "hostingPlanName": "[toLower(concat(parameters('appName'), '-', parameters('locationShort'), '-web'))]",
-    "storageAccountName": "[toLower(concat(parameters('appName'), 'data001'))]"
+    "location": "[parameters('location')]",
+    "webSiteName": "[toLower(concat(parameters('appName'),  '-', '-web'))]",
+    "sqlserverName": "[toLower(concat(parameters('appName'), '-', '-sql'))]",
+    "hostingPlanName": "[toLower(concat(parameters('appName'), '-', '-app'))]",
+    "storageAccountName": "[toLower(concat(parameters('appName'), 'data001'))]",
+    "collation": "SQL_Latin1_General_CP1_CI_AS",
+    "edition": "Standard",
+    "maxSizeBytes": "1073741824",
+    "storageAccountType": "Standard_LRS"
   },
   "resources": [
     {
@@ -162,7 +134,8 @@
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
         "displayName": "SqlServer",
-        "ansServiceCatalog": "true"
+        "ansServiceCatalog": "true",
+        "monitored": "[parameters('monitored')]"
       },
       "apiVersion": "2014-04-01-preview",
       "properties": {
@@ -180,16 +153,17 @@
             "environment": "[parameters('environmentTag')]",
             "criticality": "[parameters('criticalityTag')]",
             "displayName": "Database",
-            "ansServiceCatalog": "true"
+            "ansServiceCatalog": "true",
+            "monitored": "[parameters('monitored')]"
           },
           "apiVersion": "2014-04-01-preview",
           "dependsOn": [
             "[concat('Microsoft.Sql/servers/', variables('sqlserverName'))]"
           ],
           "properties": {
-            "edition": "[parameters('edition')]",
-            "collation": "[parameters('collation')]",
-            "maxSizeBytes": "[parameters('maxSizeBytes')]",
+            "edition": "[variables('edition')]",
+            "collation": "[variables('collation')]",
+            "maxSizeBytes": "[variables('maxSizeBytes')]",
             "requestedServiceObjectiveName": "[parameters('requestedServiceObjectiveName')]"
           }
         },
@@ -219,7 +193,8 @@
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
-        "ansServiceCatalog": "true"
+        "ansServiceCatalog": "true",
+        "monitored": "[parameters('monitored')]"
       },
       "sku": {
         "name": "[parameters('skuName')]",
@@ -244,7 +219,8 @@
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
-        "ansServiceCatalog": "true"
+        "ansServiceCatalog": "true",
+        "monitored": "[parameters('monitored')]"
       },
       "properties": {
         "name": "[variables('webSiteName')]",
@@ -303,7 +279,8 @@
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
-        "ansServiceCatalog": "true"
+        "ansServiceCatalog": "true",
+        "monitored": "[parameters('monitored')]"
       },
       "dependsOn": [
         "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
@@ -377,7 +354,8 @@
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
-        "ansServiceCatalog": "true"
+        "ansServiceCatalog": "true",
+        "monitored": "[parameters('monitored')]"
       },
       "properties": {
         "name": "[concat('ServerErrors ', variables('webSiteName'))]",
@@ -416,7 +394,8 @@
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
-        "ansServiceCatalog": "true"
+        "ansServiceCatalog": "true",
+        "monitored": "[parameters('monitored')]"
       },
       "properties": {
         "name": "[concat('ForbiddenRequests ', variables('webSiteName'))]",
@@ -455,7 +434,8 @@
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
-        "ansServiceCatalog": "true"
+        "ansServiceCatalog": "true",
+        "monitored": "[parameters('monitored')]"
       },
       "properties": {
         "name": "[concat('CPUHigh ', variables('hostingPlanName'))]",
@@ -494,7 +474,8 @@
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
-        "ansServiceCatalog": "true"
+        "ansServiceCatalog": "true",
+        "monitored": "[parameters('monitored')]"
       },
       "properties": {
         "name": "[concat('LongHttpQueue ', variables('hostingPlanName'))]",
@@ -530,10 +511,11 @@
         "application": "[parameters('applicationTag')]",
         "environment": "[parameters('environmentTag')]",
         "criticality": "[parameters('criticalityTag')]",
-        "ansServiceCatalog": "true"
+        "ansServiceCatalog": "true",
+        "monitored": "[parameters('monitored')]"
       },
       "properties": {
-        "accountType": "[parameters('storageAccountType')]"
+        "accountType": "[variables('storageAccountType')]"
       }
     }
   ]
