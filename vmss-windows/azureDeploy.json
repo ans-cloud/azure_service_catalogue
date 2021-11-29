@@ -1,5 +1,5 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmssName": {
@@ -8,24 +8,35 @@
                 "description": "Name of the Scale Set."
               }
         },
-        "vmSku": {
+        "location": {
             "type": "string",
-            "defaultValue": "Standard_A1",
+            "defaultValue": "UK South",
+            "allowedValues": [
+                "UK South",
+                "UK West"
+            ]
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_DS2_v2",
+            "allowedValues": [
+                "Standard_DS2_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2"
+            ],
             "metadata": {
-              "description": "Size of VMs in the VM Scale Set. Use Get-AzureRmVMSize Powershell command to get a list of available sizes"
+                "description": "Select a VM Size: DS2_V2 - 2 vCPUs, 7 GiB RAM;  DS3_V2 - 4 vCPUs, 14 GiB RAM;  DS2_V4 - 4 vCPUs, 28 GiB RAM;   "
             }
         },
         "windowsOSVersion": {
             "type": "string",
-            "defaultValue": "2016-Datacenter",
+            "defaultValue": "2019-Datacenter",
             "allowedValues": [
-              "2008-R2-SP1",
-              "2012-Datacenter",
-              "2012-R2-Datacenter",
-              "2016-Datacenter"
+                "2016-Datacenter",
+                "2019-Datacenter"
             ],
             "metadata": {
-              "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version. Allowed values: 2008-R2-SP1, 2012-Datacenter, 2012-R2-Datacenter & 2016-Datacenter."
+                "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
             }
         },
         "adminUsername": {
@@ -45,27 +56,50 @@
         },
         "instanceCount": {
             "type": "string",
+            "defaultValue": "1",
+            "allowedValues": [
+                "1",
+                "2",
+                "3"
+            ],
             "metadata": {
                 "description": "Number of virtual machines in the scale set"
             }
         },
         "autoscaleMin": {
             "type": "string",
+            "defaultValue": "1",
+            "allowedValues": [
+                "1",
+                "2",
+                "3"
+            ],
             "metadata": {
                 "description": "Minimum number of virtual machines in the scale set"
             }
         },
         "autoscaleMax": {
             "type": "string",
+            "defaultValue": "1",
+            "allowedValues": [
+                "1",
+                "2",
+                "3"
+            ],
             "metadata": {
                 "description": "Maximum number of virtual machines in the scale set"
             }
         },
-        "powershelldscUpdateTagVersion": {
+        
+        "monitored": {
             "type": "string",
-            "defaultValue": "1.0",
+            "defaultValue": "true",
+            "allowedValues": [
+                "true",
+                "false"
+            ],
             "metadata": {
-              "description": "Version number of the DSC deployment. Changing this value on subsequent deployments will trigger the extension to run."
+                "description": "description"
             }
         },
         "ownerTag":{
@@ -100,7 +134,7 @@
           }
     },
     "variables": {
-        "location": "[resourceGroup().location]",
+        "location": "[parameters('location')]",
         "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
         "loadBalancerName": "[concat(parameters('vmssName'), 'lb')]",
         "loadBalancerId": "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName'))]",
@@ -119,7 +153,8 @@
         },
         "imageReference": "[variables('osType')]",
         "powershelldscZipFullPath": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-windows-webapp-dsc-autoscale/DSC/IISInstall.ps1.zip",
-        "webDeployPackageFullPath": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-windows-webapp-dsc-autoscale/WebDeploy/DefaultASPWebApp.v1.0.zip"
+        "webDeployPackageFullPath": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-vmss-windows-webapp-dsc-autoscale/WebDeploy/DefaultASPWebApp.v1.0.zip",
+        "powershelldscUpdateTagVersion": "1.0"
     },
     "resources": [
         {
@@ -132,7 +167,8 @@
                 "application": "[parameters('applicationTag')]",
                 "environment": "[parameters('environmentTag')]",
                 "criticality": "[parameters('criticalityTag')]",
-                "ansServiceCatalog": "true"
+                "ansServiceCatalog": "true",
+                "monitored": "[parameters('monitored')]"
             },
             "properties": {
                 "subnets": [
@@ -166,7 +202,8 @@
                 "application": "[parameters('applicationTag')]",
                 "environment": "[parameters('environmentTag')]",
                 "criticality": "[parameters('criticalityTag')]",
-                "ansServiceCatalog": "true"
+                "ansServiceCatalog": "true",
+                "monitored": "[parameters('monitored')]"
             },
             "apiVersion": "2018-01-01",
             "sku": {
@@ -188,7 +225,8 @@
                 "application": "[parameters('applicationTag')]",
                 "environment": "[parameters('environmentTag')]",
                 "criticality": "[parameters('criticalityTag')]",
-                "ansServiceCatalog": "true"
+                "ansServiceCatalog": "true",
+                "monitored": "[parameters('monitored')]"
             },
             "apiVersion": "2018-01-01",
             "dependsOn": [
@@ -271,7 +309,8 @@
                 "application": "[parameters('applicationTag')]",
                 "environment": "[parameters('environmentTag')]",
                 "criticality": "[parameters('criticalityTag')]",
-                "ansServiceCatalog": "true"
+                "ansServiceCatalog": "true",
+                "monitored": "[parameters('monitored')]"
             },
             "properties": {
                 "securityRules": [
@@ -316,14 +355,15 @@
                 "application": "[parameters('applicationTag')]",
                 "environment": "[parameters('environmentTag')]",
                 "criticality": "[parameters('criticalityTag')]",
-                "ansServiceCatalog": "true"
+                "ansServiceCatalog": "true",
+                "monitored": "[parameters('monitored')]"
             },
             "dependsOn": [
                 "[concat('Microsoft.Network/virtualNetworks/', variables('vnetName'))]",
                 "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
             ],
             "sku": {
-                "name": "[parameters('vmSku')]",
+                "name": "[parameters('vmSize')]",
                 "tier": "Standard",
                 "capacity": "[int(parameters('instanceCount'))]"
             },
@@ -385,7 +425,7 @@
                               "type": "DSC",
                               "typeHandlerVersion": "2.9",
                               "autoUpgradeMinorVersion": true,
-                              "forceUpdateTag": "[parameters('powershelldscUpdateTagVersion')]",
+                              "forceUpdateTag": "[variables('powershelldscUpdateTagVersion')]",
                               "settings": {
                                 "configuration": {
                                   "url": "[variables('powershelldscZipFullPath')]",
