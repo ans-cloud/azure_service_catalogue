@@ -56,13 +56,6 @@
             "description": "Select a VM Size: DS2_V2 - 2 vCPUs, 7 GiB RAM;  DS3_V2 - 4 vCPUs, 14 GiB RAM;  DS2_V4 - 4 vCPUs, 28 GiB RAM;   "
         }
     },
-    "lbName": {
-      "type": "string",
-      "defaultValue": "myLB",
-      "metadata": {
-        "description": "Load Balancer name"
-      }
-    },
 
   "monitored": {
     "type": "string",
@@ -108,7 +101,7 @@
   },
   "variables": {
     "storageAccountType": "Standard_LRS",
-    "availabilitySetName": "[concat(parameters('lbName'), 'AVSet')]",
+    "availabilitySetName": "[concat(variables('lbName'), 'AVSet')]",
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "[concat(variables('vnetName'), '-subnet1')]",
     "subnetPrefix": "10.0.0.0/24",
@@ -116,18 +109,19 @@
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables ('subnetName'))]",
     "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "numberOfInstances": 2,
-    "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('lbName'))]",
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
     "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/BackendPool1')]",
     "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
-    "storageAccountName": "[concat(parameters('lbName'), 'data001')]",
-    "dnsNameforLBIP": "[concat(parameters('lbName'), 'LBIP')]",
+    "storageAccountName": "[concat(variables('lbName'), 'data001')]",
+    "dnsNameforLBIP": "[toLower(concat(variables('lbName'), '-LBIP'))]",
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
     "lbSKU": "Basic",
-    "publicIPAddressName": "[concat(parameters('lbName'), '-pip')]",
+    "publicIPAddressName": "[concat(variables('lbName'), '-pip')]",
     "nicNamePrefix": "[concat(parameters('vmNamePrefix'), '-nic')]",
-    "vnetName": "[concat(parameters('vmNamePrefix'), '-vnet')]"
+    "vnetName": "[concat(parameters('vmNamePrefix'), '-vnet')]",
+    "lbName": "[concat(parameters('vmNamePrefix'), '-lb')]"
   },
   "resources": [
     {
@@ -218,7 +212,7 @@
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('vnetName'))]",
-        "[concat('Microsoft.Network/loadBalancers/', parameters('lbName'))]"
+        "[concat('Microsoft.Network/loadBalancers/', variables('lbName'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -246,7 +240,7 @@
     },
     {
       "apiVersion": "2015-05-01-preview",
-      "name": "[parameters('lbName')]",
+      "name": "[variables('lbName')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[parameters('location')]",
       "tags": {
