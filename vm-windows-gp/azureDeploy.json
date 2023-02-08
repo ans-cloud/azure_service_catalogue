@@ -62,7 +62,7 @@
           "false"
         ],
         "metadata": {
-            "description": "Name of the owner of the VM"
+            "description": "Should this VM be monitored?"
         }
     },
 
