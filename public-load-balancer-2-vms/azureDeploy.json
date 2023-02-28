@@ -22,7 +22,7 @@
         "UK West"
       ],
       "metadata": {
-        "description": "description"
+        "description": "Location of the resources"
       }
     },
     "vmNamePrefix": {
@@ -65,7 +65,7 @@
       "false"
     ],
     "metadata": {
-      "description": "description"
+      "description": "Enable monitoring for the resources"
     }
   },
   "ownerTag":{

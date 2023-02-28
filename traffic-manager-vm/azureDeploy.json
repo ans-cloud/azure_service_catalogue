@@ -66,7 +66,7 @@
         "false"
       ],
       "metadata": {
-        "description": "description"
+        "description": "Enable monitoring for the resources"
       }
     },
     "ownerTag":{

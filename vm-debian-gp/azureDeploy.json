@@ -52,7 +52,7 @@
           "false"
         ],
         "metadata": {
-            "description": "Name of the owner of the VM"
+            "description": "Enable monitoring for the VM"
         }
     },
 
