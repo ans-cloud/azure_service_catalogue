@@ -31,14 +31,6 @@
         "description": "Location of the Virtual Machine."
       }
     },
-    /*"dnsLabelPrefix": {
-      "type": "string",
-      "metadata": {
-        "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-      }
-    },
-    */
-  
     "ubuntuOSVersion": {
       "type": "string",
       "defaultValue": "20_04-lts",
