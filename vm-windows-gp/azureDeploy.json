@@ -36,7 +36,10 @@
       "defaultValue": "2019-Datacenter",
       "allowedValues": [
         "2016-Datacenter",
-        "2019-Datacenter"
+        "2019-Datacenter",
+	"2019-standard",
+	"2022-datacenter-azure-edition",
+	"2025-datacenter-azure-edition"
       ],
       "metadata": {
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
@@ -44,14 +47,14 @@
     },
     "vmSize": {
         "type": "string",
-        "defaultValue": "Standard_DS2_v2",
+        "defaultValue": "Standard_D2ds_v6",
         "allowedValues": [
-        "Standard_DS2_v2",
-        "Standard_DS3_v2",
-        "Standard_DS4_v2"
+        "Standard_D2ds_v6",
+        "Standard_D4ds_v6",
+        "Standard_D8ds_v6"
       ],
         "metadata": {
-            "description": "Select a VM Size: DS2_V2 - 2 vCPUs, 7 GiB RAM;  DS3_V2 - 4 vCPUs, 14 GiB RAM;  DS2_V4 - 4 vCPUs, 28 GiB RAM;   "
+            "description": "Select a VM Size: D2ds_v6 - 2vCPUs, 8 GiB RAM; D4ds_v6 4vCPUs, 16 GiB RAM; D8ds_v6 8 vCPUs, 32 RAM;   "
         }
     },
     "monitor":{
