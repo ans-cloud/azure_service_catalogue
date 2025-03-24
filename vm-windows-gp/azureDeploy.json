@@ -38,7 +38,6 @@
         "2019-datacenter-gensecond",
 	"2019-standard-gensecond",
 	"2022-datacenter-azure-edition",
-	"windows-dc-2025"
       ],
       "metadata": {
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
