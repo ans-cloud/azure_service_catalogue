@@ -22,7 +22,7 @@
     },
     "vmLocation": {
       "type": "string",
-      "defaultValue": "UK South",
+      "defaultValue": "UKSouth",
       "allowedValues": [
         "UKSouth",
         "UKWest"
