@@ -35,11 +35,10 @@
       "type": "string",
       "defaultValue": "2019-Datacenter",
       "allowedValues": [
-        "2016-Datacenter-gensecond",
         "2019-datacenter-gensecond",
 	"2019-standard-gensecond",
 	"2022-datacenter-azure-edition",
-	"2025-datacenter-g2"
+	"windows-dc-2025"
       ],
       "metadata": {
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
