@@ -24,8 +24,8 @@
       "type": "string",
       "defaultValue": "UK South",
       "allowedValues": [
-        "UK South",
-        "UK West"
+        "UKSouth",
+        "UKWest"
       ],
       "metadata": {
         "description": "Location of the Virtual Machine."
