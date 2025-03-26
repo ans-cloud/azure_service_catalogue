@@ -36,7 +36,6 @@
       "defaultValue": "2019-Datacenter-gensecond",
       "allowedValues": [
        "2019-datacenter-gensecond",
-	"2019-standard-gensecond",
 	"2022-datacenter-azure-edition"
       ],
       "metadata": {
