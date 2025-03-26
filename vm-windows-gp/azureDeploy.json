@@ -22,10 +22,10 @@
     },
     "vmLocation": {
       "type": "string",
-      "defaultValue": "UKSouth",
+      "defaultValue": "UK South",
       "allowedValues": [
-        "UKSouth",
-        "UKWest"
+        "UK South",
+        "UK West"
       ],
       "metadata": {
         "description": "Location of the Virtual Machine."
