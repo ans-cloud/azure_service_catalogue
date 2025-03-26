@@ -40,7 +40,7 @@
 	"2022-datacenter-azure-edition",
       ],
       "metadata": {
-        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
+        "description": "The Windows version for the VM. This will pick a fully patched image of this Windows version. "
       }
     },
     "vmSize": {
