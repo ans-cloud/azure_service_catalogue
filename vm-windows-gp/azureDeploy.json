@@ -33,7 +33,7 @@
     },
     "windowsOSVersion": {
       "type": "string",
-      "defaultValue": "2019-Datacenter",
+      "defaultValue": "2019-datacenter-gensecond",
       "allowedValues": [
         "2019-datacenter-gensecond",
 	"2019-standard-gensecond",
