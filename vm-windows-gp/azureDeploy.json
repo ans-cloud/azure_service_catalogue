@@ -33,14 +33,14 @@
     },
     "windowsOSVersion": {
       "type": "string",
-      "defaultValue": "2019-datacenter-gensecond",
+      "defaultValue": "2019-Datacenter-gensecond",
       "allowedValues": [
-        "2019-datacenter-gensecond",
+       "2019-datacenter-gensecond",
 	"2019-standard-gensecond",
-	"2022-datacenter-azure-edition",
+	"2022-datacenter-azure-edition"
       ],
       "metadata": {
-        "description": "The Windows version for the VM. This will pick a fully patched image of this Windows version. "
+        "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
     },
     "vmSize": {
